@@ -1,14 +1,19 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "API for petitepausecafe.fr",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+	"name": "backend",
+	"version": "1.0.0",
+	"description": "API for petitepausecafe.fr",
+	"main": "index.js",
+	"scripts": {
+		"test": "jest --watchAll --verbose --coverage"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.18.2"
+	},
+	"devDependencies": {
+		"@types/jest": "^29.4.0",
+		"jest": "^29.4.0",
+		"supertest": "^6.3.3"
+	}
 }
