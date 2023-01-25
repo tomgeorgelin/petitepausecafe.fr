@@ -1,3 +1,7 @@
+.vscode/
+public/
+frontend/README.md
+
 # Logs
 logs
 *.log
