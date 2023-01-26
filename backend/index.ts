@@ -1,19 +1,17 @@
-const express = require('express');
+import express, { Request, Response } from 'express';
+import * as mongoose from 'mongoose';
+
 var articles = require('./routes/articles');
 
 const app = express();
 const port = 3000;
-const mongoose = require('mongoose');
 
 mongoose
-	.connect('mongodb://127.0.0.1:27017/petitepausecafe', {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	})
+	.connect('mongodb://127.0.0.1:27017/petitepausecafe', {})
 	.then(() => console.log('pass'))
-	.catch((e) => console.log(' fail'));
+	.catch(() => console.log(' fail'));
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
 	res.send('Hello World!');
 });
 
@@ -25,4 +23,4 @@ if (process.env.NODE_ENV !== 'test') {
 } else {
 	console.log('already launch');
 }
-module.exports = app;
+export default app;
