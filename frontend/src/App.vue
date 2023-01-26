@@ -2,13 +2,12 @@
 	<header>
 		<img
 			alt="petitepausecafe.fr logo"
-			class="logo"
 			src="./assets/logo.svg"
 			width="125"
 			height="125"
 		/>
 
-		<div class="wrapper"></div>
+		<div class="text-3xl font-bold underline text-white">Hello world!</div>
 	</header>
 
 	<main></main>
