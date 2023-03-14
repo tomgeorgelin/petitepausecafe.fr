@@ -1,5 +1,8 @@
 <template>
-	<section class="my-10 w-[95%] md:w-[70%] mx-auto flex flex-col gap-5">
+	<section
+		class="my-10 w-[95%] md:w-[70%] mx-auto flex flex-col gap-5"
+		id="catégories"
+	>
 		<div class="flex flex-row justify-between items-baseline">
 			<div class="text-xl font-semibold">Catégories</div>
 			<a href="#todo" class="text-xs text-gray-500 hover:underline"

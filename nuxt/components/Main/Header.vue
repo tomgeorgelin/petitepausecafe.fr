@@ -8,7 +8,7 @@
 			>
 				<a
 					class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
-					href="#pablo"
+					href="#nouveautés"
 				>
 					<img src="~/assets/svg/logo.svg" alt="" />
 				</a>
@@ -60,13 +60,13 @@
 					<li class="nav-item py-2">
 						<a
 							class="py-2 px-3 bg-[#FF5480] text-white rounded-md"
-							href="#pablo"
+							href="#nouveautés"
 						>
 							Nouveautés
 						</a>
 					</li>
 					<li class="nav-item py-2">
-						<a class="py-2 px-3 rounded-md" href="#pablo">
+						<a class="py-2 px-3 rounded-md" href="#catégories">
 							Catégories
 						</a>
 					</li>
