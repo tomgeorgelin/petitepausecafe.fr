@@ -1,4 +1,4 @@
-import { Article } from '~/server/models/Article.model';
+import { Category } from '~/server/models/Category.model';
 
 const slug = (text: string) =>
 	text
@@ -9,12 +9,12 @@ const slug = (text: string) =>
 export default defineEventHandler(async (event) => {
 	// Get data form body
 	const body: any = await readBody(event);
-	body.slug = slug(body.title);
+	body.slug = slug(body.name);
 
-	// create article
+	// create category
 	try {
-		await Article.create(body);
-		return { message: 'Article created' };
+		await Category.create(body);
+		return { message: 'Category created' };
 	} catch (e: any) {
 		throw createError({
 			message: e.message,
