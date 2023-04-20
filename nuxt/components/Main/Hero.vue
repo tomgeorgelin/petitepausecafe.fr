@@ -1,5 +1,5 @@
 <template>
-	<section class="my-10" id="nouveautés">
+	<section class="my-10" id="nouveautes">
 		<div class="flex flex-col md:flex-row gap-5 w-[95%] md:w-[70%] mx-auto">
 			<div class="relative rounded-lg overflow-hidden md:w-[70%]">
 				<img
@@ -12,15 +12,11 @@
 				>
 					<p class="text-xs leading-6">
 						PAR
-						<a
-							href="#author"
-							class="hover:underline decoration-[#FF5480]"
+						<a href="#author" class="hover:underline"
 							>TOM GEORGELIN</a
 						>
 						DANS
-						<a
-							href="#category"
-							class="hover:underline decoration-[#FF5480]"
+						<a href="#category" class="hover:underline"
 							>DÉVELOPPEMENT</a
 						>
 					</p>
