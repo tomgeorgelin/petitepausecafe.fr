@@ -4,7 +4,7 @@ export default defineNuxtConfig({
 	app: {
 		head: {
 			htmlAttrs: {
-				class: 'scroll-smooth ',
+				class: 'scroll-smooth',
 			},
 			bodyAttrs: {
 				style: 'background-color: #F9F9FB;',
@@ -16,12 +16,6 @@ export default defineNuxtConfig({
 				{
 					name: 'description',
 					content: 'Des articles concis et clairs !',
-				},
-			],
-			link: [
-				{
-					rel: 'icon',
-					href: '',
 				},
 			],
 		},
