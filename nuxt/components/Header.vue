@@ -83,11 +83,22 @@
 							Populaires
 						</NuxtLink>
 					</li>
-					<li class="nav-item py-2">
+					<li
+						v-if="useSession().status.value === 'authenticated'"
+						class="nav-item py-2"
+					>
 						<CommonDropdown
 							title="Mon profil"
 							:items="state.items"
 						/>
+					</li>
+					<li v-else class="nav-item py-2">
+						<NuxtLink
+							class="py-2 px-3 rounded-md"
+							href="/auth/login"
+						>
+							Se connecter
+						</NuxtLink>
 					</li>
 				</ul>
 			</div>
