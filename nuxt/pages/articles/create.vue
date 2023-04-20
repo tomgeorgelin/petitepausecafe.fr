@@ -1,6 +1,8 @@
 <template>
 	<Header />
-	<section class="container mx-auto">
+	<section
+		class="container mx-auto w-[95%] md:w-[70%] bg-white p-5 rounded-md shadow-md my-5"
+	>
 		<div class="flex flex-col w-full my-5">
 			<label for="title" class="text-gray-500 mb-2">Titre</label>
 			<input
