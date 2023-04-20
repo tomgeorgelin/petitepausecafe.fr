@@ -4,7 +4,7 @@
 	>
 		<div class="w-1/3 text-center">petitepausecafe.fr</div>
 		<div class="w-1/3">
-			<a href="https://twitter.com/Totom_____"
+			<a href="https://twitter.com/Totom_____" target="_blank"
 				><svg
 					class="mx-auto"
 					width="25"
