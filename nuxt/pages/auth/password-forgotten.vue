@@ -41,7 +41,6 @@ export default {
 				}
 			);
 			console.log(hello);
-			console.log('coucou ' + this.email);
 		},
 	},
 };

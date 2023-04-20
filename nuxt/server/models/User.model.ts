@@ -16,6 +16,11 @@ export const UserSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		role: {
+			type: String,
+			required: true,
+			default: 'user',
+		},
 		token: {
 			type: String,
 		},
