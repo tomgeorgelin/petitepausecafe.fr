@@ -1,5 +1,5 @@
 <template>
-	<MainHeader />
+	<Header />
 	<MainHero />
 	<MainCategoriesCarousel />
 	<MainPopular />

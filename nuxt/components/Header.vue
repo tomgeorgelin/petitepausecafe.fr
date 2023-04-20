@@ -56,7 +56,9 @@
 				v-bind:class="{ hidden: !showMenu, flex: showMenu }"
 				class="md:flex md:flex-grow items-middle mx-auto text-center"
 			>
-				<ul class="flex flex-col md:flex-row list-none ml-auto">
+				<ul
+					class="flex flex-col md:flex-row list-none ml-auto items-center"
+				>
 					<li class="nav-item py-2">
 						<a
 							class="py-2 px-3 bg-[#FF5480] text-white rounded-md"
@@ -76,20 +78,21 @@
 						</a>
 					</li>
 					<li class="nav-item py-2">
-						<a
+						<!-- <a
 							class="py-2 px-3 rounded-md"
 							v-if="statusVal === 'unauthenticated'"
 							href="/auth/login"
 						>
 							Se connecter
-						</a>
-						<a
+						</a> -->
+						<CommonDropdown title="Mon profil" :items="items" />
+						<!-- <a
 							class="py-2 px-3 rounded-md"
 							v-else
 							@click="signOut({ callback: '/' })"
 						>
 							Se déconnecter
-						</a>
+						</a> -->
 					</li>
 				</ul>
 			</div>
@@ -97,24 +100,39 @@
 	</nav>
 </template>
 
-<script>
+<script setup lang="ts">
+const { signOut, status, data } = useSession();
+const statusVal = status.value;
+</script>
+
+<script lang="ts">
 export default {
 	data() {
 		return {
 			showMenu: false,
+			items: [
+				{
+					title:
+						useSession().status.value === 'authenticated'
+							? 'Se déconnecter'
+							: 'Se connecter',
+					callback: this.callback,
+				},
+			],
 		};
 	},
 	methods: {
 		toggleNavbar: function () {
 			this.showMenu = !this.showMenu;
 		},
+		callback: function () {
+			const session = useSession();
+			if (session.status.value === 'authenticated') {
+				session.signOut();
+			} else {
+				navigateTo('/auth/login');
+			}
+		},
 	},
 };
-</script>
-
-<script setup>
-definePageMeta({ middleware: 'auth' });
-const { signOut, status } = useSession();
-const statusVal = status.value;
-let show = false;
 </script>
