@@ -6,12 +6,12 @@
 			<div
 				class="w-full relative flex justify-between md:justify-around px-4 md:w-auto md:static md:block"
 			>
-				<a
+				<NuxtLink
 					class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
-					href="#nouveautés"
+					href="/"
 				>
 					<img src="~/assets/svg/logo.svg" alt="" />
-				</a>
+				</NuxtLink>
 				<button
 					class="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none"
 					type="button"
@@ -53,7 +53,7 @@
 				</button>
 			</div>
 			<div
-				v-bind:class="{ hidden: !showMenu, flex: showMenu }"
+				v-bind:class="{ hidden: !state.showMenu, flex: state.showMenu }"
 				class="md:flex md:flex-grow items-middle mx-auto text-center"
 			>
 				<ul
@@ -85,7 +85,10 @@
 						>
 							Se connecter
 						</a> -->
-						<CommonDropdown title="Mon profil" :items="items" />
+						<CommonDropdown
+							title="Mon profil"
+							:items="state.items"
+						/>
 						<!-- <a
 							class="py-2 px-3 rounded-md"
 							v-else
@@ -100,39 +103,36 @@
 	</nav>
 </template>
 
-<script setup lang="ts">
-const { signOut, status, data } = useSession();
-const statusVal = status.value;
-</script>
-
-<script lang="ts">
-export default {
-	data() {
-		return {
-			showMenu: false,
-			items: [
-				{
-					title:
-						useSession().status.value === 'authenticated'
-							? 'Se déconnecter'
-							: 'Se connecter',
-					callback: this.callback,
-				},
-			],
-		};
-	},
-	methods: {
-		toggleNavbar: function () {
-			this.showMenu = !this.showMenu;
-		},
-		callback: function () {
-			const session = useSession();
-			if (session.status.value === 'authenticated') {
-				session.signOut();
-			} else {
-				navigateTo('/auth/login');
-			}
-		},
-	},
+<script lang="ts" setup>
+const toggleNavbar = () => {
+	state.showMenu = !state.showMenu;
 };
+const callback = () => {
+	const session = useSession();
+	if (session.status.value === 'authenticated') {
+		session.signOut();
+	} else {
+		navigateTo('/auth/login');
+	}
+};
+
+const state = reactive({
+	showMenu: false,
+	items: [
+		{
+			title:
+				useSession().status.value === 'authenticated'
+					? 'Se déconnecter'
+					: 'Se connecter',
+			callback: callback,
+		},
+	],
+});
+
+if (useSession().status.value === 'authenticated') {
+	state.items.unshift({
+		title: 'Créer un article',
+		callback: () => navigateTo('/articles/create'),
+	});
+}
 </script>
