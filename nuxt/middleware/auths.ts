@@ -12,8 +12,7 @@ export default defineNuxtRouteMiddleware(
 		const { status, signIn, data } = useSession();
 		if (status.value === 'authenticated') {
 			if (
-				from.meta.meta.authority <=
-				rolesEquivalent[data.value?.user.role]
+				to.meta.meta.authority <= rolesEquivalent[data.value?.user.role]
 			) {
 				return 0;
 			}
