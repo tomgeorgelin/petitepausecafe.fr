@@ -1,4 +1,5 @@
 <template>
+	<Header />
 	<div
 		class="bg-white p-10 flex flex-col shadow-xl rounded-xl w-11/12 sm:w-5/6 lg:w-6/12 xl:4/12 mx-auto mt-25"
 	>
@@ -33,14 +34,10 @@ export default {
 	},
 	methods: {
 		async handleClick() {
-			const { data: hello } = await useFetch(
-				'/api/auth/password-forgotten',
-				{
-					method: 'put',
-					body: { email: this.email },
-				}
-			);
-			console.log(hello);
+			const { data } = await useFetch('/api/auth/password-forgotten', {
+				method: 'put',
+				body: { email: this.email },
+			});
 		},
 	},
 };

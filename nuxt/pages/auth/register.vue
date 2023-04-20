@@ -168,7 +168,6 @@
 </template>
 
 <script lang="ts">
-import * as bcrypt from 'bcrypt';
 definePageMeta({ auth: false });
 const regPassword = new RegExp(
 	'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})'
@@ -226,7 +225,6 @@ export default {
 			}
 		},
 		handlePasswordCheck() {
-			console.log(regPassword.test(this.password));
 			if (regPassword.test(this.password)) {
 				this.check_passowrds = true;
 			} else {
@@ -237,7 +235,6 @@ export default {
 			this.show_passwords = !this.show_passwords;
 		},
 		handleEmailCheck() {
-			console.log(regEmail.test(this.email));
 			if (regEmail.test(this.email)) {
 				this.check_email = true;
 			} else {
