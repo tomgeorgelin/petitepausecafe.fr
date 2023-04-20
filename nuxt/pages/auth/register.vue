@@ -156,10 +156,10 @@
 					</div>
 				</button>
 				<div class="flex justify-evenly mt-5">
-					<a
+					<NuxtLink
 						href="/auth/login"
 						class="w-full text-right font-medium text-gray-500 hover:underline"
-						>Déjà un compte ? Se connecter</a
+						>Déjà un compte ? Se connecter</NuxtLink
 					>
 				</div>
 			</div>

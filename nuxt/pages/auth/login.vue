@@ -1,4 +1,5 @@
 <template>
+	<Header />
 	<div
 		class="bg-white p-10 flex flex-col shadow-xl rounded-xl w-11/12 sm:w-5/6 lg:w-6/12 xl:4/12 mx-auto mt-25"
 		v-if="useSession().status.value === 'unauthenticated'"
@@ -60,55 +61,19 @@
 					</div>
 				</button>
 				<div class="flex justify-evenly mt-5">
-					<a
+					<NuxtLink
 						href="/auth/password-forgotten"
 						class="w-full text-center font-medium text-gray-500 hover:underline"
-						>Mot de passe oublié ?</a
+						>Mot de passe oublié ?</NuxtLink
 					>
-					<a
+					<NuxtLink
 						href="/auth/register"
 						class="w-full text-center font-medium text-gray-500 hover:underline"
-						>Créer un compte</a
+						>Créer un compte</NuxtLink
 					>
 				</div>
 			</div>
 		</form>
-	</div>
-	<div
-		v-else
-		class="bg-white p-10 flex flex-col shadow-xl rounded-xl w-11/12 sm:w-5/6 lg:w-6/12 xl:4/12 mx-auto mt-25"
-	>
-		<div
-			id="button"
-			class="flex flex-col w-full my-5"
-			@click="useSession().signOut({ callbackUrl: '/' })"
-		>
-			<button
-				type="submit"
-				class="w-full py-4 bg-green-600 rounded-lg text-green-100"
-			>
-				<div class="flex flex-row items-center justify-center">
-					<div class="mr-2">
-						<svg
-							class="w-6 h-6"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-							transform="rotate(180)"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-							></path>
-						</svg>
-					</div>
-					<div class="font-bold">Se déconnecter</div>
-				</div>
-			</button>
-		</div>
 	</div>
 </template>
 
@@ -121,6 +86,11 @@ export default {
 			password: '',
 			error: false,
 		};
+	},
+	setup() {
+		if (useSession().status.value === 'authenticated') {
+			navigateTo('/');
+		}
 	},
 	methods: {
 		async handleClick() {

@@ -60,22 +60,28 @@
 					class="flex flex-col md:flex-row list-none ml-auto items-center"
 				>
 					<li class="nav-item py-2">
-						<a
+						<NuxtLink
 							class="py-2 px-3 bg-[#FF5480] text-white rounded-md"
-							href="#nouveautés"
+							href="/#nouveautes"
 						>
 							Nouveautés
-						</a>
+						</NuxtLink>
 					</li>
 					<li class="nav-item py-2">
-						<a class="py-2 px-3 rounded-md" href="#catégories">
+						<NuxtLink
+							class="py-2 px-3 rounded-md"
+							href="/#catégories"
+						>
 							Catégories
-						</a>
+						</NuxtLink>
 					</li>
 					<li class="nav-item py-2">
-						<a class="py-2 px-3 rounded-md" href="#populaires">
+						<NuxtLink
+							class="py-2 px-3 rounded-md"
+							href="/#populaires"
+						>
 							Populaires
-						</a>
+						</NuxtLink>
 					</li>
 					<li class="nav-item py-2">
 						<CommonDropdown
