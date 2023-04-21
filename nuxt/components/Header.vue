@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts" setup>
-import { checkAuthorisation } from '~/utils/index';
+import { checkAuthorisation } from '~~/utils/index';
 const toggleNavbar = () => {
 	state.showMenu = !state.showMenu;
 };
@@ -134,7 +134,7 @@ const state = reactive({
 });
 
 if (useSession().status.value === 'authenticated') {
-	if (checkAuthorisation('/articles/create')) {
+	if (await checkAuthorisation('articles', 'create')) {
 		state.items.unshift({
 			title: 'Créer un article',
 			callback: () => navigateTo('/articles/create'),
