@@ -1,12 +1,15 @@
-import jwt, { decode } from 'jsonwebtoken';
+import jwt, { JwtPayload, decode } from 'jsonwebtoken';
 import { User } from '~~/server/models/User.model';
 import bcrypt from 'bcrypt';
 export default defineEventHandler(async (event) => {
 	const body: any = await readBody(event);
 
-	let decoded;
+	let decoded: jwt.JwtPayload;
 	try {
-		decoded = jwt.verify(body.token, process.env.JWT_KEY);
+		decoded = jwt.verify(
+			body.token,
+			process.env.JWT_KEY || ''
+		) as JwtPayload;
 	} catch (err) {
 		console.error(err);
 		return {
