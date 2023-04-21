@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { decode } from 'jsonwebtoken';
 import { User } from '~~/server/models/User.model';
 import bcrypt from 'bcrypt';
 export default defineEventHandler(async (event) => {
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 	if (decoded) {
 		const password = await bcrypt.hash(body.password, 10);
 		const user = await User.findOneAndUpdate(
-			{ email: 'coucou@gmail.com' },
+			{ email: decoded.email },
 			{ password }
 		);
 		user.save();
