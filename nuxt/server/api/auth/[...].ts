@@ -59,8 +59,6 @@ export default NuxtAuthHandler({
 					// save user token
 					user.token = token;
 					user.save();
-					console.log(user);
-
 					// user
 					return user;
 				}

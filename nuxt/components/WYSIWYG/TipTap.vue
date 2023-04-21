@@ -113,8 +113,6 @@ export default {
 			onUpdate: ({ editor }) => {
 				// this.res = editor.getHTML();
 				this.$emit('update:res', editor.getHTML());
-
-				console.log(editor.getHTML());
 			},
 		});
 	},

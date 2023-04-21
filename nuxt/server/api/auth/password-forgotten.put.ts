@@ -41,7 +41,6 @@ export default defineEventHandler(async (event) => {
 			console.log(info, 'ok');
 		}
 	});
-	console.log(body.email);
 	return {
 		hello: 'you',
 	};
