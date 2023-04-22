@@ -43,11 +43,14 @@ const ArticleSchema = new Schema(
 			type: String,
 		},
 		user_id: {
-			type: String,
+			type: Schema.Types.ObjectId,
 			required: true,
+			ref: 'Users',
 		},
 		category_id: {
-			type: String,
+			type: Schema.Types.ObjectId,
+			required: true,
+			ref: 'Categories',
 		},
 		active_at: {
 			type: Date,

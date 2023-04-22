@@ -10,8 +10,9 @@ const PermissionSchema = new Schema(
 			type: String,
 		},
 		role_id: {
-			type: String,
+			type: Schema.Types.ObjectId,
 			required: true,
+			ref: 'Roles',
 		},
 	},
 	{ timestamps: true }

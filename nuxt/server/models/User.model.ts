@@ -16,10 +16,10 @@ export const UserSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		role: {
-			type: String,
+		role_id: {
+			type: Schema.Types.ObjectId,
 			required: true,
-			default: 'user',
+			ref: 'Roles',
 		},
 		token: {
 			type: String,
