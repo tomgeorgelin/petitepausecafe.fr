@@ -12,22 +12,23 @@
 				>
 					<p class="text-xs leading-6">
 						PAR
-						<a href="#author" class="hover:underline"
-							>TOM GEORGELIN</a
-						>
+						<a href="#author" class="hover:underline">{{
+							articles[
+								state.currentArticle
+							].user_id.name.toUpperCase()
+						}}</a>
 						DANS
-						<a href="#category" class="hover:underline"
-							>DÉVELOPPEMENT</a
-						>
+						<a href="#category" class="hover:underline">{{
+							articles[
+								state.currentArticle
+							].category_id.name.toUpperCase()
+						}}</a>
 					</p>
 					<p class="text-2xl leading-10">
-						Comment créer un site web marchant en utilisant des
-						solutions innovante
+						{{ articles[state.currentArticle].title }}
 					</p>
 					<p class="text-xs leading-6">
-						Vous vous êtes déjà demandé comment créer un site web
-						marchant de A à Z ? Dans cet article nous allons vous
-						expliquer comment créer votre premier site marchant !
+						{{ articles[state.currentArticle].description }}
 					</p>
 				</div>
 			</div>
@@ -42,27 +43,33 @@
 				</div>
 				<hr class="w-full mt-4 mb-5 h-px border-0 bg-gray-200" />
 				<div class="flex flex-col gap-7">
-					<div class="">
-						<p class="text-xs text-gray-500">13 MARS 2023</p>
-						<p>Comment créer un site web marchant</p>
-					</div>
-					<div class="">
-						<p class="text-xs text-gray-500">13 MARS 2023</p>
-						<p class="text-[#FF5480]">
-							Comment créer un site web marchant en utilisant des
-							solutions innovante
+					<div
+						class=""
+						v-for="(article, index) in articles"
+						:key="index"
+					>
+						<p class="text-xs text-gray-500">
+							{{
+								new Date(article.createdAt)
+									.toLocaleDateString('fr-FR', {
+										day: 'numeric',
+										month: 'long',
+										year: 'numeric',
+									})
+									.replace(/(^|\s)\S/g, (l) =>
+										l.toLocaleUpperCase()
+									)
+									.toUpperCase()
+							}}
 						</p>
-					</div>
-					<div class="">
-						<p class="text-xs text-gray-500">13 MARS 2023</p>
-						<p>
-							Comment créer un site web marchant avec du no code
-						</p>
-					</div>
-					<div class="">
-						<p class="text-xs text-gray-500">13 MARS 2023</p>
-						<p>
-							Les 10 essentiels pour créer votre site web marchant
+						<p
+							class="transition-colors duration-1000"
+							:class="{
+								'text-[#FF5480]':
+									state.currentArticle === index,
+							}"
+						>
+							{{ article.title }}
 						</p>
 					</div>
 				</div>
@@ -70,3 +77,24 @@
 		</div>
 	</section>
 </template>
+
+<script>
+export default {
+	props: {
+		articles: {
+			type: Array,
+			required: true,
+		},
+	},
+	setup(props) {
+		const state = reactive({ currentArticle: 0 });
+		setInterval(() => {
+			state.currentArticle =
+				++state.currentArticle % props.articles.length;
+		}, 5000);
+		return {
+			state,
+		};
+	},
+};
+</script>
