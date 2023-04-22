@@ -1,15 +1,22 @@
 <template>
 	<Header />
 	<MainHero :articles="articles.slice(0, 4)" />
-	<MainCategoriesCarousel />
+	<MainCategoriesCarousel :categories="categories" />
 	<MainPopular />
 	<MainRandom />
 	<Footer />
 </template>
 
 <script setup>
-const { data, error } = await useFetch('/api/articles', {
-	query: { latest: true },
-});
-const { articles } = data.value;
+const { data: articlesData, articles: error } = await useFetch(
+	'/api/articles',
+	{
+		query: { latest: true },
+	}
+);
+const { articles } = articlesData.value;
+const { data: categoriesData, error: categoriesError } = await useFetch(
+	'/api/categories'
+);
+const { categories } = categoriesData.value;
 </script>

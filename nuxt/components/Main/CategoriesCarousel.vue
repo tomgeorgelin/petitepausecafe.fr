@@ -15,6 +15,7 @@
 				id="scroller"
 			>
 				<div
+					v-for="(category, index) in categories"
 					class="w-[200px] h-[300px] flex flex-col gap-3 flex-shrink-0 snap-center"
 				>
 					<img
@@ -22,57 +23,9 @@
 						src="https://cdn.dribbble.com/users/63407/screenshots/5720287/dribbble_balloon_man_4x.png"
 						alt=""
 					/>
-					<div class="text-center font-semibold">UI design</div>
-				</div>
-				<div
-					class="w-[200px] h-[300px] flex flex-col gap-3 flex-shrink-0 snap-center"
-				>
-					<img
-						class="h-[250px] overflow-hidden object-cover object-center rounded-lg"
-						src="https://cdn.dribbble.com/users/63407/screenshots/5720287/dribbble_balloon_man_4x.png"
-						alt=""
-					/>
-					<div class="text-center font-semibold">UI design</div>
-				</div>
-				<div
-					class="w-[200px] h-[300px] flex flex-col gap-3 flex-shrink-0 snap-center"
-				>
-					<img
-						class="h-[250px] overflow-hidden object-cover object-center rounded-lg"
-						src="https://cdn.dribbble.com/users/63407/screenshots/5720287/dribbble_balloon_man_4x.png"
-						alt=""
-					/>
-					<div class="text-center font-semibold">UI design</div>
-				</div>
-				<div
-					class="w-[200px] h-[300px] flex flex-col gap-3 flex-shrink-0 snap-center"
-				>
-					<img
-						class="h-[250px] overflow-hidden object-cover object-center rounded-lg"
-						src="https://cdn.dribbble.com/users/63407/screenshots/5720287/dribbble_balloon_man_4x.png"
-						alt=""
-					/>
-					<div class="text-center font-semibold">UI design</div>
-				</div>
-				<div
-					class="w-[200px] h-[300px] flex flex-col gap-3 flex-shrink-0 snap-center"
-				>
-					<img
-						class="h-[250px] overflow-hidden object-cover object-center rounded-lg"
-						src="https://cdn.dribbble.com/users/63407/screenshots/5720287/dribbble_balloon_man_4x.png"
-						alt=""
-					/>
-					<div class="text-center font-semibold">UI design</div>
-				</div>
-				<div
-					class="w-[200px] h-[300px] flex flex-col gap-3 flex-shrink-0 snap-center"
-				>
-					<img
-						class="h-[250px] overflow-hidden object-cover object-center rounded-lg"
-						src="https://cdn.dribbble.com/users/63407/screenshots/5720287/dribbble_balloon_man_4x.png"
-						alt=""
-					/>
-					<div class="text-center font-semibold">UI design</div>
+					<div class="text-center font-semibold">
+						{{ category.name }}
+					</div>
 				</div>
 			</div>
 			<div
@@ -116,6 +69,12 @@
 
 <script>
 export default {
+	props: {
+		categories: {
+			type: Array,
+			required: true,
+		},
+	},
 	mounted() {
 		document.getElementById('scroller').addEventListener('scroll', () => {
 			if (
