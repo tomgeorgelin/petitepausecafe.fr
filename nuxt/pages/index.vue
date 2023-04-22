@@ -2,21 +2,34 @@
 	<Header />
 	<MainHero :articles="articles.slice(0, 4)" />
 	<MainCategoriesCarousel :categories="categories" />
-	<MainPopular />
-	<MainRandom />
+	<MainPopular :popularArticles="popularArticles" />
+	<MainRandom :article="article" />
 	<Footer />
 </template>
 
 <script setup>
-const { data: articlesData, articles: error } = await useFetch(
+const { data: articlesData, error: articlesError } = await useFetch(
 	'/api/articles',
 	{
 		query: { latest: true },
 	}
 );
-const { articles } = articlesData.value;
+let { articles } = articlesData.value;
 const { data: categoriesData, error: categoriesError } = await useFetch(
 	'/api/categories'
 );
 const { categories } = categoriesData.value;
+const { data: articleData, error: articleError } = await useFetch(
+	'/api/articles',
+	{
+		query: { random: true },
+	}
+);
+const article = articleData.value.articles;
+
+const { data: popularArticlesData, error: popularArticlesError } =
+	await useFetch('/api/articles', {
+		query: { popular: true },
+	});
+const popularArticles = popularArticlesData.value.articles;
 </script>

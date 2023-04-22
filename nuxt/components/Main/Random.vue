@@ -21,24 +21,22 @@
 							<a
 								href="#author"
 								class="hover:underline decoration-[#FF5480]"
-								>TOM GEORGELIN</a
+							>
+								{{ article.user_id.name }}</a
 							>
 							DANS
 							<a
 								href="#category"
 								class="hover:underline decoration-[#FF5480]"
-								>DÉVELOPPEMENT</a
 							>
+								{{ article.category_id.name }}
+							</a>
 						</p>
 						<p class="text-2xl leading-10">
-							Comment créer un site web marchant en utilisant des
-							solutions innovante
+							{{ article.title }}
 						</p>
 						<p class="text-xs text-gray-500 leading-6">
-							Vous vous êtes déjà demandé comment créer un site
-							web marchant de A à Z ? Dans cet article nous allons
-							vous expliquer comment créer votre premier site
-							marchant !
+							{{ article.description }}
 						</p>
 					</div>
 				</div>
@@ -53,3 +51,14 @@
 		</div>
 	</section>
 </template>
+
+<script>
+export default {
+	props: {
+		article: {
+			type: Array,
+			required: true,
+		},
+	},
+};
+</script>

@@ -15,55 +15,37 @@
 				/>
 			</div>
 			<div class="flex flex-wrap md:w-1/2 h-[400px]">
-				<div class="w-1/2 p-2">
+				<div
+					class="w-1/2 p-2"
+					v-for="(article, index) in popularArticles"
+					:key="index"
+				>
 					<div
 						class="bg-white shadow-lg rounded-lg w-full h-full flex flex-col justify-around px-5"
 					>
 						<a
 							href=""
 							class="text-sm hover:underline decoration-[#FF5480] text-gray-500"
-							>CATEGORY</a
+							>{{ article.category_id.name.toUpperCase() }}</a
 						>
-						<div>Faire un site de e-commerce</div>
-					</div>
-				</div>
-				<div class="w-1/2 p-2">
-					<div
-						class="bg-white shadow-lg rounded-lg w-full h-full flex flex-col justify-around px-5"
-					>
-						<a
-							href=""
-							class="text-sm hover:underline decoration-[#FF5480] text-gray-500"
-							>CATEGORY</a
-						>
-						<div>Faire un site de e-commerce</div>
-					</div>
-				</div>
-				<div class="w-1/2 p-2">
-					<div
-						class="bg-white shadow-lg rounded-lg w-full h-full flex flex-col justify-around px-5"
-					>
-						<a
-							href=""
-							class="text-sm hover:underline decoration-[#FF5480] text-gray-500"
-							>CATEGORY</a
-						>
-						<div>Faire un site de e-commerce</div>
-					</div>
-				</div>
-				<div class="w-1/2 p-2">
-					<div
-						class="bg-white shadow-lg rounded-lg w-full h-full flex flex-col justify-around px-5"
-					>
-						<a
-							href=""
-							class="text-sm hover:underline decoration-[#FF5480] text-gray-500"
-							>CATEGORY</a
-						>
-						<div>Faire un site de e-commerce</div>
+						<div>{{ article.title }}</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 </template>
+
+<script>
+export default {
+	props: {
+		popularArticles: {
+			type: Array,
+			required: true,
+		},
+	},
+	setup(props) {
+		console.log(props.popularArticles);
+	},
+};
+</script>
