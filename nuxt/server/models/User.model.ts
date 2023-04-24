@@ -16,6 +16,10 @@ export const UserSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		slug: {
+			type: String,
+			required: true,
+		},
 		role_id: {
 			type: Schema.Types.ObjectId,
 			required: true,

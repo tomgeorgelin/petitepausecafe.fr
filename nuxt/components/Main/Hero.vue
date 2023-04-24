@@ -12,21 +12,50 @@
 				>
 					<p class="text-xs leading-6">
 						PAR
-						<a href="#author" class="hover:underline">{{
-							articles[
-								state.currentArticle
-							].user_id.name.toUpperCase()
-						}}</a>
+						<NuxtLink
+							:to="{
+								path:
+									'/authors/' +
+									articles[state.currentArticle].user_id.slug,
+							}"
+							class="hover:underline"
+							target="_blank"
+						>
+							{{
+								articles[
+									state.currentArticle
+								].user_id.name.toUpperCase()
+							}}
+						</NuxtLink>
 						DANS
-						<a href="#category" class="hover:underline">{{
-							articles[
-								state.currentArticle
-							].category_id.name.toUpperCase()
-						}}</a>
+						<NuxtLink
+							:to="{
+								path:
+									'/categories/' +
+									articles[state.currentArticle].category_id
+										.slug,
+							}"
+							class="hover:underline"
+							target="_blank"
+						>
+							{{
+								articles[
+									state.currentArticle
+								].category_id.name.toUpperCase()
+							}}
+						</NuxtLink>
 					</p>
-					<p class="text-2xl leading-10">
+					<NuxtLink
+						:to="{
+							path:
+								'/articles/' +
+								articles[state.currentArticle].slug,
+						}"
+						class="hover:underline text-2xl leading-10"
+						target="_blank"
+					>
 						{{ articles[state.currentArticle].title }}
-					</p>
+					</NuxtLink>
 					<p class="text-xs leading-6">
 						{{ articles[state.currentArticle].description }}
 					</p>
@@ -35,10 +64,10 @@
 			<div class="md:w-[30%] w-[95%]">
 				<div class="flex justify-between items-baseline">
 					<p class="text-lg font-semibold">Dernières sorties</p>
-					<a
-						href="#todo"
+					<NuxtLink
+						:to="{ path: '/articles' }"
 						class="text-xs text-gray-500 hover:underline"
-						>Tout voir</a
+						>Tout voir</NuxtLink
 					>
 				</div>
 				<hr class="w-full mt-4 mb-5 h-px border-0 bg-gray-200" />

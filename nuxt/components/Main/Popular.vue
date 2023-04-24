@@ -2,8 +2,10 @@
 	<section class="my-10 w-[95%] md:w-[70%] mx-auto flex flex-col gap-5">
 		<div class="flex flex-row justify-between items-baseline">
 			<div class="text-xl font-semibold" id="populaires">Populaires</div>
-			<a href="#todo" class="text-xs text-gray-500 hover:underline"
-				>Tout voir</a
+			<NuxtLink
+				:to="{ path: '/articles' }"
+				class="text-xs text-gray-500 hover:underline"
+				>Tout voir</NuxtLink
 			>
 		</div>
 		<div class="flex flex-col md:flex-row gap-2 md:h-[400px]">
@@ -23,12 +25,23 @@
 					<div
 						class="bg-white shadow-lg rounded-lg w-full h-full flex flex-col justify-around px-5"
 					>
-						<a
-							href=""
+						<NuxtLink
+							:to="{
+								path: '/categories/' + article.category_id.slug,
+							}"
 							class="text-sm hover:underline decoration-[#FF5480] text-gray-500"
-							>{{ article.category_id.name.toUpperCase() }}</a
+							target="_blank"
+							>{{
+								article.category_id.name.toUpperCase()
+							}}</NuxtLink
 						>
-						<div>{{ article.title }}</div>
+						<NuxtLink
+							:to="{
+								path: '/articles/' + article.slug,
+							}"
+							class="hover:underline"
+							>{{ article.title }}</NuxtLink
+						>
 					</div>
 				</div>
 			</div>
@@ -43,9 +56,6 @@ export default {
 			type: Array,
 			required: true,
 		},
-	},
-	setup(props) {
-		console.log(props.popularArticles);
 	},
 };
 </script>

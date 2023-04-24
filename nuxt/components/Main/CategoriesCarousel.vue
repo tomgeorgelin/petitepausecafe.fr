@@ -5,18 +5,24 @@
 	>
 		<div class="flex flex-row justify-between items-baseline">
 			<div class="text-xl font-semibold">Catégories</div>
-			<a href="#todo" class="text-xs text-gray-500 hover:underline"
-				>Tout voir</a
+			<NuxtLink
+				:to="{ path: '/categories' }"
+				class="text-xs text-gray-500 hover:underline"
+				>Tout voir</NuxtLink
 			>
 		</div>
 		<div class="flex flex-row gap-2">
 			<div
-				class="overflow-scroll scroll-smooth snap-x snap-mandatory w-full flex flex-row gap-2"
+				class="overflow-x-auto scroll-smooth snap-x snap-mandatory w-full flex flex-row gap-2"
 				id="scroller"
 			>
-				<div
-					v-for="(category, index) in categories"
+				<NuxtLink
+					:to="{
+						path: '/categories/' + category.slug,
+					}"
 					class="w-[200px] h-[300px] flex flex-col gap-3 flex-shrink-0 snap-center"
+					target="_blank"
+					v-for="(category, index) in categories"
 				>
 					<img
 						class="h-[250px] overflow-hidden object-cover object-center rounded-lg"
@@ -26,7 +32,7 @@
 					<div class="text-center font-semibold">
 						{{ category.name }}
 					</div>
-				</div>
+				</NuxtLink>
 			</div>
 			<div
 				class="shadow-md p-3 h-[250px] flex flex-col justify-center cursor-pointer transition-all duration-1000"

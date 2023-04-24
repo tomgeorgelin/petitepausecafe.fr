@@ -4,37 +4,50 @@
 			<div class="text-xl font-semibold" id="random">
 				Article au hasard
 			</div>
-			<a href="#todo" class="text-xs text-gray-500 hover:underline"
-				>Tout voir</a
+			<NuxtLink
+				:to="{ path: '/articles' }"
+				class="text-xs text-gray-500 hover:underline"
+				>Tout voir</NuxtLink
 			>
 		</div>
 		<div
 			class="flex flex-col gap-0 md:flex-row md:h-[300px] shadow-lg rounded-lg"
 		>
 			<div class="md:w-1/2 h-[300px]">
-				<div class="h-full">
+				<div class="h-full ‹">
 					<div
 						class="rounded-l-lg px-5 w-full h-full flex flex-col justify-around bg-white"
 					>
 						<p class="text-xs text-gray-600 leading-6">
 							PAR
-							<a
-								href="#author"
+							<NuxtLink
+								:to="{
+									path: '/authors/' + article.user_id.slug,
+								}"
+								target="_blank"
 								class="hover:underline decoration-[#FF5480]"
 							>
-								{{ article.user_id.name }}</a
+								{{ article.user_id.name }}</NuxtLink
 							>
 							DANS
-							<a
-								href="#category"
-								class="hover:underline decoration-[#FF5480]"
+							<NuxtLink
+								:to="{
+									path:
+										'/categories/' +
+										article.category_id.slug,
+								}"
+								target="_blank"
+								class="z-20 hover:underline decoration-[#FF5480]"
 							>
-								{{ article.category_id.name }}
-							</a>
+								{{ article.category_id.name }}</NuxtLink
+							>
 						</p>
-						<p class="text-2xl leading-10">
+						<NuxtLink
+							:to="{ path: '/articles/' + article.slug }"
+							class="text-2xl leading-10 hover:underline duration-1000"
+						>
 							{{ article.title }}
-						</p>
+						</NuxtLink>
 						<p class="text-xs text-gray-500 leading-6">
 							{{ article.description }}
 						</p>
