@@ -13,7 +13,7 @@ const CategorySchema = new Schema(
 			unique: true,
 			required: true,
 		},
-		color: {
+		image: {
 			type: String,
 			required: true,
 		},
