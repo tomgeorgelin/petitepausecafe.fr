@@ -22,7 +22,9 @@ export default defineEventHandler(async (event) => {
 			.populate('user_id')
 			.populate('category_id');
 	} else {
-		articles = await Article.find()
+		articles = await Article.find({})
+			.limit(10)
+			.sort({ created_at: -1 })
 			.populate('user_id')
 			.populate('category_id');
 	}
