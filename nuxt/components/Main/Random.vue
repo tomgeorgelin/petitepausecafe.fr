@@ -22,7 +22,11 @@
 							PAR
 							<NuxtLink
 								:to="{
-									path: '/authors/' + article.user_id.slug,
+									path: '/articles/',
+
+									query: {
+										author: article.user_id.slug,
+									},
 								}"
 								target="_blank"
 								class="hover:underline decoration-[#FF5480]"

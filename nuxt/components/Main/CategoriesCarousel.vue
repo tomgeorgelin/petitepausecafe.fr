@@ -18,7 +18,8 @@
 			>
 				<NuxtLink
 					:to="{
-						path: '/categories/' + category.slug,
+						path: '/articles/',
+						query: { category: category.slug },
 					}"
 					class="w-[200px] h-[300px] flex flex-col gap-3 flex-shrink-0 snap-center"
 					target="_blank"

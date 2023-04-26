@@ -14,9 +14,11 @@
 						PAR
 						<NuxtLink
 							:to="{
-								path:
-									'/authors/' +
-									articles[state.currentArticle].user_id.slug,
+								path: '/articles/',
+								query: {
+									author: articles[state.currentArticle]
+										.user_id.slug,
+								},
 							}"
 							class="hover:underline"
 							target="_blank"
@@ -30,10 +32,12 @@
 						DANS
 						<NuxtLink
 							:to="{
-								path:
-									'/categories/' +
-									articles[state.currentArticle].category_id
-										.slug,
+								path: '/articles/',
+								query: {
+									category:
+										articles[state.currentArticle]
+											.category_id.slug,
+								},
 							}"
 							class="hover:underline"
 							target="_blank"
