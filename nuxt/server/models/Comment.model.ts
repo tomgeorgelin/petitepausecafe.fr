@@ -14,13 +14,17 @@ export const CommentSchema = new Schema(
 		},
 		parent_id: {
 			type: Schema.Types.ObjectId,
-			required: true,
 			ref: 'Comments',
 		},
 		user_id: {
 			type: Schema.Types.ObjectId,
 			required: true,
 			ref: 'Users',
+		},
+		article_id: {
+			type: Schema.Types.ObjectId,
+			required: true,
+			ref: 'Articles',
 		},
 		active_at: {
 			type: Date,

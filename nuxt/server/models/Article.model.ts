@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import { CommentSchema } from './Comment.model';
 // Article schema
 const ArticleSchema = new Schema(
 	{
@@ -54,9 +53,6 @@ const ArticleSchema = new Schema(
 		},
 		active_at: {
 			type: Date,
-		},
-		comments: {
-			type: [CommentSchema],
 		},
 	},
 	{ timestamps: true }
