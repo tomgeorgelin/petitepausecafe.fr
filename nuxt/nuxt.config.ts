@@ -35,11 +35,9 @@ export default defineNuxtConfig({
 	nitro: {
 		plugins: ['~/server/index.ts'],
 	},
-	auth: {
-		// enableGlobalAppMiddleware: true,
-	},
 
 	runtimeConfig: {
 		mongodbUri: process.env.MONGODB_URI,
 	},
+	// auth: { origin: process.env.ORIGIN },
 });
