@@ -20,6 +20,13 @@ export const UserSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		image: {
+			type: String,
+			required: true,
+		},
+		description: {
+			type: String,
+		},
 		role_id: {
 			type: Schema.Types.ObjectId,
 			required: true,
