@@ -32,7 +32,7 @@ jobs:
                   username: ${{ secrets.USERNAME }}
                   password: ${{ secrets.PASSWORD }}
                   port: 22
-                  source: './nuxt/output'
+                  source: './nuxt/.output'
                   target: './petitepausecafe'
 
             - name: start Nuxt server
