@@ -34,8 +34,6 @@ jobs:
                   port: 22
                   source: 'nuxt/.output'
                   target: './petitepausecafe'
-                  script: |
-                      ls
 
             - name: start Nuxt server
               uses: appleboy/ssh-action@master
@@ -46,4 +44,4 @@ jobs:
                   port: 22
                   script: |
                       cd petitepausecafe/
-                      pm2 start server/index.mjs
+                      pm2 start .output/server/index.mjs
