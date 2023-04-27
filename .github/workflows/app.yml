@@ -44,4 +44,4 @@ jobs:
                   port: 22
                   script: |
                       cd petitepausecafe/
-                      pm2 restart petitepausecafe
+                      pm2 start server/index.mjs
