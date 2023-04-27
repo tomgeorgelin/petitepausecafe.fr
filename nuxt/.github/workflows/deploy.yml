@@ -1,0 +1,46 @@
+on: push
+name: 🚀 Deploy website on push
+
+jobs:
+    web-deploy:
+        name: 🎉 Deploy
+        runs-on: ubuntu-latest
+        steps:
+            - name: 🚚 Get latest code
+              uses: actions/checkout@v3
+
+            - name: Use Node.js 19
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '19'
+
+            - name: 🔨 Build Project
+              env:
+                  MONGODB_URI: ${{secrets.MONGODB_URI}}
+                  JWT_KEY: ${{secrets.JWT_KEY}}
+                  ORIGIN: ${{secrets.ORIGIN}}
+                  HOST: ${{secrets.HOST}}
+              run: |
+                  npm install
+                  npm run build
+
+            - name: 📂 Sync files
+              uses: appleboy/scp-action@v0.1.4
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USERNAME }}
+                  password: ${{ secrets.PASSWORD }}
+                  port: 22
+                  source: './output'
+                  target: './petitepausecafe'
+
+            - name: start Nuxt server
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USERNAME }}
+                  password: ${{ secrets.PASSWORD }}
+                  port: 22
+                  script: |
+                      cd petitepausecafe/
+                      pm2 restart petitepausecafe

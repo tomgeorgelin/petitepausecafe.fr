@@ -34,10 +34,26 @@ export default defineNuxtConfig({
 	modules: ['@nuxtjs/tailwindcss', '@sidebase/nuxt-auth'],
 	nitro: {
 		plugins: ['~/server/index.ts'],
+
+		esbuild: {
+			options: {
+				target: 'esnext',
+			},
+		},
 	},
 
 	runtimeConfig: {
 		mongodbUri: process.env.MONGODB_URI,
 	},
-	// auth: { origin: process.env.ORIGIN },
+	vite: {
+		build: {
+			target: 'esnext',
+		},
+		esbuild: {
+			supported: {
+				'top-level-await': true, //browsers can handle top-level-await features
+			},
+		},
+	},
+	auth: { origin: process.env.ORIGIN },
 });
