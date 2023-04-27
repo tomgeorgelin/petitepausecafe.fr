@@ -43,5 +43,5 @@ jobs:
                   password: ${{ secrets.PASSWORD }}
                   port: 22
                   script: |
-                      cd petitepausecafe/
+                      cd petitepausecafe/nuxt
                       pm2 start .output/server/index.mjs
