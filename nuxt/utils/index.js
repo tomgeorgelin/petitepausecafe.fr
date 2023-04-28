@@ -1,7 +1,4 @@
-import { Permission } from '~/server/models/Permission.model';
-import { Role } from '~/server/models/Role.model';
-
-export const checkAuthorisation = async (object: string, operation: string) => {
+export const checkAuthorisation = async (object, operation) => {
 	const sessionData = useSession().data.value;
 	if (sessionData && sessionData.user) {
 		const userRole = sessionData.user.role;
