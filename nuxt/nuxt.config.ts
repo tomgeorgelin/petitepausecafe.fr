@@ -55,5 +55,7 @@ export default defineNuxtConfig({
 			},
 		},
 	},
+	telemetry: false,
+
 	auth: { origin: process.env.ORIGIN },
 });
