@@ -1,6 +1,6 @@
 import jwt, { JwtPayload, decode } from 'jsonwebtoken';
 import { User } from '~~/server/models/User.model';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 export default defineEventHandler(async (event) => {
 	const body: any = await readBody(event);
 

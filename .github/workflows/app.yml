@@ -44,4 +44,4 @@ jobs:
                   port: 22
                   script: |
                       cd petitepausecafe/nuxt
-                      pm2 start .output/server/ecosystem.config.cjs
+                      pm2 start .output/server/ecosystem.config.cjs --port 3000

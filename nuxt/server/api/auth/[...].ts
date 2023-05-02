@@ -1,6 +1,6 @@
 import { User } from '~/server/models/User.model';
 import { NuxtAuthHandler } from '#auth';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import CredentialsProvider from 'next-auth/providers/credentials';
 

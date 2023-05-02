@@ -1,5 +1,5 @@
 import { User } from '../models/User.model';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 export default defineEventHandler(async (event) => {
 	// Get data form body
 	const body: any = await readBody(event);
