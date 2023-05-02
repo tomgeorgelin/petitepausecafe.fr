@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export default NuxtAuthHandler({
-	secret: process.env.JWT_KEY,
+	secret: process.env.JWT_KEY || 'envdontwork',
 
 	pages: {
 		// Change the default behavior to use `/login` as the path for the sign-in page
