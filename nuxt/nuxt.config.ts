@@ -41,9 +41,9 @@ export default defineNuxtConfig({
 			},
 		},
 	},
-
 	runtimeConfig: {
 		mongodbUri: process.env.MONGODB_URI,
+		JWT_KEY: process.env.JWT_KEY,
 	},
 	vite: {
 		build: {
