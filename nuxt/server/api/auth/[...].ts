@@ -31,6 +31,7 @@ export default NuxtAuthHandler({
 		// @ts-ignore
 		CredentialsProvider.default({
 			async authorize(credentials: { email: string; password: string }) {
+				console.log(process.env.JWT_KEY);
 				// You need to provide your own logic here that takes the credentials
 				// submitted and returns either a object representing a user or value
 				// that is false/null if the credentials are invalid.
