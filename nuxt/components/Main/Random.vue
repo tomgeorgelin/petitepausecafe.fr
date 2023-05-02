@@ -1,5 +1,8 @@
 <template>
-	<section class="my-10 w-[95%] md:w-[70%] mx-auto flex flex-col gap-5">
+	<section
+		v-if="article"
+		class="my-10 w-[95%] md:w-[70%] mx-auto flex flex-col gap-5"
+	>
 		<div class="flex flex-row justify-between items-baseline">
 			<div class="text-xl font-semibold" id="random">
 				Article au hasard
@@ -67,6 +70,7 @@
 			</div>
 		</div>
 	</section>
+	<section v-else>Aucun article pour le moment</section>
 </template>
 
 <script>

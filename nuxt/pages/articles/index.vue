@@ -1,6 +1,6 @@
 <template>
 	<Header />
-	<section>
+	<section v-if="articles.length > 0">
 		<section class="my-10 w-[95%] md:w-[70%] xl:w-[50%] mx-auto">
 			<div v-if="articles.length > 0" class="bg-white rounded-md">
 				<div
@@ -59,6 +59,7 @@
 			</div>
 		</section>
 	</section>
+	<section v-else>Aucun article pour le moment</section>
 
 	<Footer />
 	<div></div>
