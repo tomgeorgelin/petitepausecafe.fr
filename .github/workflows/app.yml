@@ -23,7 +23,7 @@ jobs:
                   cd nuxt 
                   npm install
                   npm run build
-                  echo "hello $ORIGIN"
+                  echo "hello ${{secrets.ORIGIN}}"
 
             - name: 📂 Sync files
               uses: appleboy/scp-action@v0.1.4
