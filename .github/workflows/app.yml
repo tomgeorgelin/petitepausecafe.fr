@@ -19,11 +19,11 @@ jobs:
                   MONGODB_URI: ${{secrets.MONGODB_URI}}
                   JWT_KEY: ${{secrets.JWT_KEY}}
                   ORIGIN: ${{secrets.ORIGIN}}
-                  HOST: ${{secrets.HOST}}
               run: |
                   cd nuxt 
                   npm install
                   npm run build
+                  echo "hello $ORIGIN"
 
             - name: 📂 Sync files
               uses: appleboy/scp-action@v0.1.4
@@ -44,4 +44,4 @@ jobs:
                   port: 22
                   script: |
                       cd petitepausecafe/nuxt
-                      pm2 start .output/server/ecosystem.config.cjs --port 3000
+                      pm2 restart petitepausecafe
