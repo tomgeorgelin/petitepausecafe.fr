@@ -16,9 +16,6 @@ jobs:
 
             - name: 🔨 Build Project
               env:
-                  MONGODB_URI: ${{secrets.MONGODB_URI}}
-                  JWT_KEY: ${{secrets.JWT_KEY}}
-                  ORIGIN: ${{secrets.ORIGIN}}
                   MONGODB_URI: ${{env.MONGODB_URI}}
                   JWT_KEY: ${{env.JWT_KEY}}
                   ORIGIN: ${{env.ORIGIN}}
