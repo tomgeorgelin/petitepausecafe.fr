@@ -19,11 +19,14 @@ jobs:
                   MONGODB_URI: ${{secrets.MONGODB_URI}}
                   JWT_KEY: ${{secrets.JWT_KEY}}
                   ORIGIN: ${{secrets.ORIGIN}}
+                  MONGODB_URI: ${{env.MONGODB_URI}}
+                  JWT_KEY: ${{env.JWT_KEY}}
+                  ORIGIN: ${{env.ORIGIN}}
               run: |
                   cd nuxt 
                   npm install
                   npm run build
-                  echo "hello ${{secrets.ORIGIN}}"
+                  echo "hello ${{secrets.JWT_KEY}}"
 
             - name: 📂 Sync files
               uses: appleboy/scp-action@v0.1.4
