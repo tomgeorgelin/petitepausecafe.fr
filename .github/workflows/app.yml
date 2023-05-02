@@ -32,7 +32,7 @@ jobs:
                   username: ${{ secrets.USERNAME }}
                   password: ${{ secrets.PASSWORD }}
                   port: 22
-                  source: 'nuxt'
+                  source: 'nuxt/.output'
                   target: './petitepausecafe'
 
             - name: start Nuxt server
@@ -44,4 +44,4 @@ jobs:
                   port: 22
                   script: |
                       cd petitepausecafe/nuxt
-                      pm2 start .output/server/index.mjs
+                      pm2 start .output/server/ecosystem.config.cjs
