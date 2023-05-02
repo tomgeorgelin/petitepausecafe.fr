@@ -1,5 +1,5 @@
 <template>
-	<section class="my-10" id="nouveautes">
+	<section class="my-10" id="nouveautes" v-if="articles.length > 0">
 		<div class="flex flex-col md:flex-row gap-5 w-[95%] md:w-[70%] mx-auto">
 			<div class="relative rounded-lg overflow-hidden md:w-[70%]">
 				<img
@@ -109,6 +109,7 @@
 			</div>
 		</div>
 	</section>
+	<section v-else>Aucun articles pour le moment</section>
 </template>
 
 <script>
