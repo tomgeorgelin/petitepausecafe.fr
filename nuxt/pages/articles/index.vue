@@ -57,7 +57,7 @@
 			<div
 				class="mt-10 w-[95%] md:w-[70%] xl:w-[50%] py-5 mx-auto flex flex-col gap-5"
 			>
-				<CommonArticles :articles="articles" class="" />
+				<CommonArticles :articles="articles" />
 			</div>
 		</section>
 	</section>

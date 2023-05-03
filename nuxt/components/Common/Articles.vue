@@ -1,6 +1,7 @@
 <template>
 	<NuxtLink
 		v-for="(article, index) in articles"
+		:key="index"
 		:to="{ path: '/articles/' + article.slug }"
 		class="bg-[#F9F9FB] w-full rounded-md flex flex-row h-[250px] shadow-sm"
 	>

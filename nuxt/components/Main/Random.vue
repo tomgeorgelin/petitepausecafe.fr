@@ -39,9 +39,11 @@
 							DANS
 							<NuxtLink
 								:to="{
-									path:
-										'/categories/' +
-										article.category_id.slug,
+									path: '/articles/',
+
+									query: {
+										category: article.category_id.slug,
+									},
 								}"
 								target="_blank"
 								class="z-20 hover:underline decoration-[#FF5480]"

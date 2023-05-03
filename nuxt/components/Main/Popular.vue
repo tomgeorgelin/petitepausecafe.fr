@@ -27,7 +27,11 @@
 					>
 						<NuxtLink
 							:to="{
-								path: '/categories/' + article.category_id.slug,
+								path: '/articles/',
+
+								query: {
+									category: article.category_id.slug,
+								},
 							}"
 							class="text-sm hover:underline decoration-[#FF5480] text-gray-500"
 							target="_blank"
