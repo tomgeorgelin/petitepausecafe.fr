@@ -10,7 +10,10 @@ export default defineEventHandler(async (event) => {
 		})
 			.populate('category_id')
 			.populate('user_id');
-		comments = await Comment.find({ article_id: articleTmp._id })
+		comments = await Comment.find({
+			article_id: articleTmp._id,
+			active: true,
+		})
 			.sort({ createdAt: -1 })
 			.populate('parent_id')
 			.populate('user_id');

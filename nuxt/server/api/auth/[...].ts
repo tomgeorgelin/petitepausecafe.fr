@@ -19,12 +19,13 @@ export default NuxtAuthHandler({
 			if (isSignIn) {
 				token.jwt = user ? (user as any).access_token || '' : '';
 				token.id = user ? user.id || '' : '';
-				token.role = user ? (user as any).role || '' : '';
+				token.role = user ? (user as any).role_id || '' : '';
 			}
 			return Promise.resolve(token);
 		},
 		session: async ({ session, token }) => {
 			(session as any).user.role = token.role;
+			(session as any).user.id = token.id;
 			return Promise.resolve(session);
 		},
 	},
@@ -32,7 +33,6 @@ export default NuxtAuthHandler({
 		// @ts-ignore
 		CredentialsProvider.default({
 			async authorize(credentials: { email: string; password: string }) {
-				console.log(config.JWT_KEY);
 				// You need to provide your own logic here that takes the credentials
 				// submitted and returns either a object representing a user or value
 				// that is false/null if the credentials are invalid.
@@ -44,7 +44,9 @@ export default NuxtAuthHandler({
 					.trim()
 					.toLocaleLowerCase();
 				// Validate if user exist in our database
-				const user = await User.findOne({ email: credentials.email });
+				const user = await User.findOne({
+					email: credentials.email,
+				}).populate('role_id');
 
 				if (
 					user &&
