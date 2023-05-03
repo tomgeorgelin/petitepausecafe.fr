@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
+const config = useRuntimeConfig();
 export default defineEventHandler(async (event) => {
 	// Get data form body
 	const body: any = await readBody(event);
@@ -13,7 +14,7 @@ export default defineEventHandler(async (event) => {
 			pass: 'g/nR/.g~~63!.Vn83!',
 		},
 	});
-	const token = jwt.sign({ email: body.email }, process.env.JWT_KEY ?? '', {
+	const token = jwt.sign({ email: body.email }, config.JWT_KEY ?? '', {
 		expiresIn: 180,
 	});
 	const link =

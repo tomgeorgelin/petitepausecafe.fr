@@ -6,7 +6,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 const config = useRuntimeConfig();
 
 export default NuxtAuthHandler({
-	secret: config.mongodbUri,
+	secret: config.JWT_KEY,
 
 	pages: {
 		// Change the default behavior to use `/login` as the path for the sign-in page
@@ -32,7 +32,7 @@ export default NuxtAuthHandler({
 		// @ts-ignore
 		CredentialsProvider.default({
 			async authorize(credentials: { email: string; password: string }) {
-				console.log(config.mongodbUri);
+				console.log(config.JWT_KEY);
 				// You need to provide your own logic here that takes the credentials
 				// submitted and returns either a object representing a user or value
 				// that is false/null if the credentials are invalid.
@@ -53,7 +53,7 @@ export default NuxtAuthHandler({
 					// Create token
 					const token = jwt.sign(
 						{ user_id: user._id, email: credentials.email },
-						process.env.JWT_KEY ?? '',
+						config.JWT_KEY ?? '',
 						{
 							expiresIn: '2h',
 						}
