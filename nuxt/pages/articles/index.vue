@@ -28,9 +28,11 @@
 				</div>
 				<div
 					v-if="author"
-					class="flex flex-col sm:flex-row sm:gap-5 sm:h-[150px] w-full"
+					class="flex flex-col sm:flex-row sm:gap-5 w-full"
 				>
-					<div class="h-[150px] sm:h-full mx-auto flex items-center">
+					<div
+						class="h-[150px] mx-auto flex justify-center items-center w-full"
+					>
 						<img
 							:src="articles[0].user_id.image"
 							alt=""
