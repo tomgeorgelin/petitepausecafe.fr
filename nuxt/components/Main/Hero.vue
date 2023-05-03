@@ -5,7 +5,7 @@
 				<img
 					src="https://s3.amazonaws.com/designco-web-assets/uploads/2017/06/designbetter_website_book_assets_illustrations_designleadershiphandbook_cover.png"
 					alt=""
-					class="object-cover h-full"
+					class="object-cover md:h-full"
 				/>
 				<div
 					class="absolute h-full py-8 px-10 top-0 inset-x-0 text-white bg-[#1B0042]/[85%]"
