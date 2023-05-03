@@ -3,6 +3,7 @@ import { NuxtAuthHandler } from '#auth';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { Role } from '~/server/models/Role.model';
 const config = useRuntimeConfig();
 
 export default NuxtAuthHandler({
@@ -43,10 +44,17 @@ export default NuxtAuthHandler({
 				credentials.email = credentials.email
 					.trim()
 					.toLocaleLowerCase();
+
 				// Validate if user exist in our database
-				const user = await User.findOne({
-					email: credentials.email,
-				}).populate('role_id');
+				let user;
+				try {
+					// @ts-ignore
+					user = await User.findOne({
+						email: credentials.email,
+					}).populate({ path: 'role_id', model: Role });
+				} catch (e) {
+					console.log(e);
+				}
 
 				if (
 					user &&
