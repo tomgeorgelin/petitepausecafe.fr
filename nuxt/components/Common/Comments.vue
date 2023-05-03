@@ -3,6 +3,7 @@
 		<div class="flex flex-row justify-between items-center">
 			<div class="font-semibold text-xl">Commentaires</div>
 			<div
+				v-if="useSession().status.value === 'authenticated'"
 				@click="this.handleToggleAddComment()"
 				class="border cursor-pointer rounded-md px-3 py-2 border-[#FF5480] text-[#FF5480]"
 			>
