@@ -1,13 +1,11 @@
-import { Role } from '../models/Role.model';
 import { Permission } from '../models/Permission.model';
 
 export default defineEventHandler(async (event) => {
-	const body: any = await readBody(event);
-	const { object, operation, role } = body;
+	const query = getQuery(event);
 	const permission = await Permission.findOne({
-		object,
-		operation,
-		role_id: role,
+		object: query.object,
+		operation: query.operation,
+		role_id: query.role,
 	});
 	if (permission) {
 		return { res: true };
