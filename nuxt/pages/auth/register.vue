@@ -1,7 +1,7 @@
 <template>
 	<Header />
 	<section
-		class="bg-white p-10 flex flex-col shadow-xl rounded-xl w-11/12 sm:w-5/6 lg:w-6/12 xl:4/12 mx-auto mt-5"
+		class="bg-white p-10 flex flex-col shadow-xl rounded-xl w-11/12 sm:w-5/6 lg:w-6/12 xl:4/12 mx-auto my-5"
 		v-if="useSession().status.value === 'unauthenticated'"
 	>
 		<h2 class="text-2xl font-bold text-gray-800 text-left mb-5">
@@ -194,6 +194,7 @@
 			</div>
 		</form>
 	</section>
+	<Footer />
 </template>
 
 <script lang="ts">
