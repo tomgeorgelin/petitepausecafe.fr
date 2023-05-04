@@ -94,8 +94,7 @@
 						<p
 							class="transition-colors duration-1000"
 							:class="{
-								'text-[#FF5480]':
-									state.currentArticle === index,
+								'text-tint': state.currentArticle === index,
 							}"
 						>
 							{{ article.title }}

@@ -61,7 +61,7 @@
 				>
 					<li class="nav-item py-2">
 						<NuxtLink
-							class="py-2 px-3 bg-[#FF5480] text-white rounded-md"
+							class="py-2 px-3 bg-tint text-white rounded-md"
 							href="/#nouveautes"
 						>
 							Nouveautés

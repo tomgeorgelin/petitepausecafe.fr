@@ -16,7 +16,7 @@
 					type="text"
 					id="username"
 					placeholder="S'il vous plait insérez votre email"
-					class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:shadow-lg"
+					class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 					v-model="email"
 				/>
 			</div>
@@ -28,7 +28,7 @@
 					type="password"
 					id="password"
 					placeholder="S'il vous plait insérez votre mot de passe"
-					class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:shadow-lg"
+					class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 					v-model="password"
 				/>
 			</div>
@@ -38,7 +38,7 @@
 			<div id="button" class="flex flex-col w-full my-5">
 				<button
 					type="submit"
-					class="w-full py-4 bg-green-600 rounded-lg text-green-100"
+					class="w-full py-4 bg-tint rounded-lg text-white"
 				>
 					<div class="flex flex-row items-center justify-center">
 						<div class="mr-2">

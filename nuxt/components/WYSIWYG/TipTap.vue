@@ -103,7 +103,7 @@ export default {
 				}),
 				Link.configure({
 					HTMLAttributes: {
-						class: 'text-[#FF5480] hover:underline decoration-[#FF5480]',
+						class: 'text-tint hover:underline decoration-tint',
 					},
 				}),
 				Highlight.configure({

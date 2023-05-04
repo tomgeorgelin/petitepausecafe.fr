@@ -9,7 +9,7 @@
 				type="text"
 				id="title"
 				placeholder="Titre de l'article"
-				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF5480] focus:shadow-lg"
+				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 				v-model="title"
 			/>
 		</div>
@@ -23,7 +23,7 @@
 				cols="30"
 				rows="4"
 				placeholder="Votre description"
-				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF5480] focus:shadow-lg"
+				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 				>{{ description }}</textarea
 			>
 		</div>
@@ -33,7 +33,7 @@
 				type="text"
 				id="seo_title"
 				placeholder="Titre de l'article"
-				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF5480] focus:shadow-lg"
+				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 				v-model="seo_title"
 			/>
 		</div>
@@ -47,7 +47,7 @@
 				cols="30"
 				rows="4"
 				placeholder="Votre description SEO"
-				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF5480] focus:shadow-lg"
+				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 				>{{ description }}</textarea
 			>
 		</div>
@@ -59,7 +59,7 @@
 				type="text"
 				id="seo_keywords"
 				placeholder="Titre de l'article"
-				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF5480] focus:shadow-lg"
+				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 				v-model="seo_keywords"
 			/>
 		</div>
@@ -68,7 +68,7 @@
 			<input
 				type="checkbox"
 				id="active"
-				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF5480] focus:shadow-lg"
+				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 				v-model="active"
 			/>
 		</div>

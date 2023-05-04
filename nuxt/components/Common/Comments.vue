@@ -5,7 +5,7 @@
 			<div
 				v-if="useSession().status.value === 'authenticated'"
 				@click="this.handleToggleAddComment()"
-				class="border cursor-pointer rounded-md px-3 py-2 border-[#FF5480] text-[#FF5480]"
+				class="border cursor-pointer rounded-md px-3 py-2 border-tint text-tint"
 			>
 				Laisser un commentaire
 			</div>
@@ -19,12 +19,12 @@
 		</div>
 		<div v-if="toggleAddComment">
 			<textarea
-				class="w-full mt-5 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF5480]"
+				class="w-full mt-5 border rounded-md focus:outline-none focus:ring-2 focus:ring-tint"
 				v-model="body"
 			></textarea>
 			<div
 				@click="this.handleAddComment()"
-				class="cursor-pointer px-3 py-2 w-fit ml-auto text-xs font-semibold border border-[#FF5480] text-[#FF5480] rounded-md"
+				class="cursor-pointer px-3 py-2 w-fit ml-auto text-xs font-semibold border border-tint text-tint rounded-md"
 			>
 				Envoyer
 			</div>

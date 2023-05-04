@@ -24,7 +24,7 @@
 						},
 					}"
 					target="_blank"
-					class="hover:underline decoration-[#FF5480]"
+					class="hover:underline decoration-tint"
 				>
 					{{ article.user_id.name }}</NuxtLink
 				>
@@ -37,7 +37,7 @@
 						},
 					}"
 					target="_blank"
-					class="z-20 hover:underline decoration-[#FF5480]"
+					class="z-20 hover:underline decoration-tint"
 				>
 					{{ article.category_id.name }}</NuxtLink
 				>

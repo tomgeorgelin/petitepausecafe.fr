@@ -33,7 +33,7 @@
 									category: article.category_id.slug,
 								},
 							}"
-							class="text-sm hover:underline decoration-[#FF5480] text-gray-500"
+							class="text-sm hover:underline decoration-tint text-gray-500"
 							target="_blank"
 							>{{
 								article.category_id.name.toUpperCase()
