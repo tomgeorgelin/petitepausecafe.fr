@@ -1,11 +1,5 @@
 import { Article } from '~/server/models/Article.model';
-
-const slug = (text: string) =>
-	text
-		.toLowerCase()
-		.replace(/[^\w ]+/g, '')
-		.replace(/ +/g, '-');
-
+import { slug } from '~/server/utils/index';
 export default defineEventHandler(async (event) => {
 	// Get data form body
 	const body: any = await readBody(event);
