@@ -13,7 +13,7 @@
 					>Adresse mail</label
 				>
 				<input
-					type="text"
+					type="email"
 					id="username"
 					placeholder="S'il vous plait insérez votre email"
 					class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"

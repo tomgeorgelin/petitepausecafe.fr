@@ -13,7 +13,7 @@
 					>Adresse mail</label
 				>
 				<input
-					type="text"
+					type="email"
 					id="email"
 					@input="handleEmailCheck()"
 					placeholder="Adresse mail"
