@@ -10,11 +10,16 @@
 			</div>
 			<div class="basis-2/6 pl-3 flex flex-row gap-3 items-baseline">
 				<div>
-					{{ comment.user_id.name }}
+					{{
+						comment.user_id !== null
+							? comment.user_id.name
+							: 'Auteur inexistant'
+					}}
 				</div>
 				<div
 					v-if="
 						useSession().status.value === 'authenticated' &&
+						comment.user_id !== null &&
 						(comment.user_id._id ===
 							useSession().data.value.user.id ||
 							permission)

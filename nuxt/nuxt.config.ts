@@ -31,7 +31,8 @@ export default defineNuxtConfig({
 			],
 		},
 	},
-	modules: ['@nuxtjs/tailwindcss', '@sidebase/nuxt-auth'],
+	modules: ['@nuxtjs/tailwindcss', '@sidebase/nuxt-auth', '@tailvue/nuxt'],
+
 	nitro: {
 		plugins: ['~/server/index.ts'],
 

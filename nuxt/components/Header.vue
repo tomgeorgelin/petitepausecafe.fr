@@ -140,5 +140,9 @@ if (useSession().status.value === 'authenticated') {
 			callback: () => navigateTo('/articles/create'),
 		});
 	}
+	state.items.unshift({
+		title: 'Mes données',
+		callback: () => navigateTo('/profil'),
+	});
 }
 </script>

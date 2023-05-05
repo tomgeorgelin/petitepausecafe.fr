@@ -43,7 +43,9 @@
 		</ul>
 		<div class="basis-3/4">
 			<div v-if="state.currentTab === 0">
-				<div>Profil vérifé ? {{ true ? '✅' : '❌' }}</div>
+				<div>
+					Profil vérifé ? {{ state.user.verified ? '✅' : '❌' }}
+				</div>
 				<div id="input" class="flex flex-col w-full my-5">
 					<label for="role" class="text-gray-500 mb-2">Role</label>
 					<div
@@ -121,19 +123,128 @@
 				</div>
 			</div>
 			<div class="" v-if="state.currentTab === 1">
-				<div>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					Minus delectus fuga mollitia in dolores. Aspernatur
-					provident illo odit voluptas ducimus, labore facere error,
-					quibusdam ipsum cum facilis ad quisquam expedita?
+				<div id="input" class="flex flex-col w-full my-5">
+					<label for="old" class="text-gray-500 mb-2"
+						>Ancien mot de passe
+					</label>
+					<input
+						type="password"
+						id="old"
+						v-model="state.oldPassword"
+						class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
+					/>
+				</div>
+				<div id="input" class="flex flex-col w-full my-5">
+					<label for="newPassword" class="text-gray-500 mb-2"
+						>Nouveau mot de passe
+					</label>
+					<input
+						@input="handleInputPasswords"
+						type="password"
+						id="newPassword"
+						v-model="state.newPassword"
+						class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
+					/>
+				</div>
+				<div id="input" class="flex flex-col w-full my-5">
+					<label for="newPasswordCheck" class="text-gray-500 mb-2"
+						>Confirmation nouveau mot de passe
+					</label>
+					<input
+						@input="handleInputPasswords"
+						type="password"
+						id="newPasswordCheck"
+						v-model="state.newPasswordCheck"
+						class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
+					/>
+				</div>
+				<div
+					v-if="state.error"
+					id="error"
+					class="text-center text-red-700"
+				>
+					Il semblerait qu'il y a une erreur dans vos données
+				</div>
+				<div id="button" class="flex flex-col w-full my-5">
+					<button
+						@click="handleSubmitPasswordUpdate()"
+						v-bind:disabled="
+							!(
+								checkPasswords(
+									state.newPassword,
+									state.newPasswordCheck
+								) && checkPassword(state.newPassword)
+							)
+								? true
+								: undefined
+						"
+						class="w-full py-4 disabled:bg-gray-500 disabled:cursor-not-allowed bg-tint rounded-lg text-white"
+					>
+						<div class="flex flex-row items-center justify-center">
+							<div class="mr-2">
+								<svg
+									class="w-6 h-6"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+									></path>
+								</svg>
+							</div>
+							<div class="font-bold">
+								Mettre à jour votre mot de passe
+							</div>
+						</div>
+					</button>
 				</div>
 			</div>
 			<div class="" v-if="state.currentTab === 2">
-				<div>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
-					laudantium veritatis qui quae, consectetur vero in quidem
-					quam, soluta sapiente iure voluptatibus modi perferendis
-					unde officia cumque, alias totam labore!
+				<div class="flex flex-col w-full my-5">
+					<div class="text-tint text-sm my-3">
+						<div>
+							Attention, toute suppression est définitive. Vous
+							allez perdre l'accès à votre compte, vos articles
+							(si vous en avez) seront supprimés ainsi que leurs
+							commentaires associés.
+						</div>
+						<div>
+							Les commentaires que vous avez fait sur d'autres
+							articles resteront mais ne porteront plus votre nom.
+						</div>
+					</div>
+					<button
+						@click="
+							{
+								{
+									$modal.show({
+										type: 'danger',
+										title: 'Attention vous allez supprimer votre compte',
+										body: 'Attention, toute suppression est définitive. Vous allez perdre l\'accès à votre compte, vos articles (si vous en avez) seront supprimés ainsi que leurs commentaires associés.\nLes commentaires que vous avez fait sur d\'autres articles resteront mais ne porteront plus votre nom.',
+										primary: {
+											label: 'Supprimer',
+											theme: 'red',
+											action: () =>
+												handleDeleteEverything(), // #TODO
+										},
+										secondary: {
+											label: 'Annuler',
+											theme: 'white',
+											action: () => $toast.show('Annulé'),
+										},
+									});
+								}
+							}
+						"
+						class="w-full py-4 hover:bg-tint transition-colors duration-300 bg-gray-500 disabled:cursor-not-allowed rounded-lg text-white"
+					>
+						Supprimer votre compte
+					</button>
 				</div>
 			</div>
 		</div>
@@ -141,6 +252,8 @@
 	<Footer />
 </template>
 <script lang="ts" setup>
+const { $toast, $modal } = useNuxtApp();
+import { checkPasswords, checkPassword } from '~/utils/index';
 definePageMeta({
 	middleware: 'auths',
 	meta: {
@@ -152,10 +265,15 @@ const { data, error } = await useFetch(
 );
 const state = reactive<{
 	currentTab: number;
+	oldPassword: string;
+	newPassword: string;
+	newPasswordCheck: string;
+	error: boolean;
 	user: {
 		description: string;
 		email: string;
 		name: string;
+		verified: string;
 		_id: string;
 		image: string;
 		role_id: {
@@ -165,6 +283,10 @@ const state = reactive<{
 	};
 }>({
 	currentTab: 0,
+	oldPassword: '',
+	newPassword: '',
+	error: false,
+	newPasswordCheck: '',
 	// @ts-ignore
 	user: data.value.user,
 });
@@ -180,5 +302,73 @@ const handleSubmitUpdate = () => {
 			image: state.user.image,
 		},
 	});
+	if (data.value && data.value.message && data.value.message === 'ko') {
+		$toast.show({
+			title: 'Erreur lors de la mise à jour',
+			type: 'danger',
+			timeout: 10,
+			pauseOnHover: true,
+		});
+	} else {
+		$toast.show({
+			title: 'Profil mis à jour',
+			type: 'success',
+			timeout: 10,
+			pauseOnHover: true,
+		});
+	}
+};
+const handleInputPasswords = () => {
+	if (!checkPasswords(state.newPassword, state.newPasswordCheck)) {
+		console.log('password different');
+	}
+	if (!checkPassword(state.newPassword)) {
+		console.log('password 8 char etc');
+	}
+};
+const handleSubmitPasswordUpdate = async () => {
+	const { data, error } = await useFetch('/api/user/update-password', {
+		method: 'put',
+		body: {
+			email: state.user.email,
+			oldPassword: state.oldPassword,
+			newPassword: state.newPassword,
+		},
+	});
+	if (data.value && data.value.message && data.value.message === 'ko') {
+		$toast.show({
+			title: 'Erreur lors de la mise à jour',
+			type: 'danger',
+			timeout: 10,
+			pauseOnHover: true,
+		});
+	} else {
+		$toast.show({
+			title: 'Profil mis à jour',
+			type: 'success',
+			timeout: 10,
+			pauseOnHover: true,
+		});
+	}
+};
+
+const handleDeleteEverything = async () => {
+	const { data } = await useFetch('/api/user/delete', {
+		method: 'delete',
+		body: {
+			email: state.user.email,
+		},
+	});
+	if (data.value && data.value.message && data.value.message === 'ko') {
+		$toast.show({
+			title: 'Erreur lors de la suppression du compte',
+			type: 'danger',
+			timeout: 10,
+			pauseOnHover: true,
+		});
+	} else {
+		useSession().signOut();
+		navigateTo('/');
+	}
 };
 </script>

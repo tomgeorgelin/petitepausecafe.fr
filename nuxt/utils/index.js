@@ -1,3 +1,7 @@
+const REGEX_PASSWORD = new RegExp(
+	'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+);
+
 export const checkAuthorization = async (object, operation) => {
 	const sessionData = useSession().data.value;
 	if (sessionData && sessionData.user) {
@@ -11,3 +15,8 @@ export const checkAuthorization = async (object, operation) => {
 	}
 	return false;
 };
+
+export const checkPasswords = (password1, password2) =>
+	password1 === password2 && password1 !== '' && password2 !== '';
+
+export const checkPassword = (password) => REGEX_PASSWORD.test(password);
