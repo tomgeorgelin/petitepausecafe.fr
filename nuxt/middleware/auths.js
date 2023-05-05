@@ -1,7 +1,7 @@
 const rolesEquivalent = {
 	none: 0,
 	user: 1,
-	author: 2,
+	writer: 2,
 	admin: 3,
 };
 
