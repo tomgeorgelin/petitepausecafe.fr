@@ -112,7 +112,7 @@ export default {
 		async handleDelete() {
 			const { data, error } = await useFetch(
 				'/api/comments/' + this.comment._id,
-				{ method: 'delete' }
+				{ method: 'put' }
 			);
 			if (data.value.message === 'ko') {
 				console.log('#TODO');
