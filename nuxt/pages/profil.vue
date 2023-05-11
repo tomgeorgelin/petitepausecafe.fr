@@ -230,7 +230,7 @@
 											label: 'Supprimer',
 											theme: 'red',
 											action: () =>
-												handleDeleteEverything(), // #TODO
+												handleDeleteEverything(),
 										},
 										secondary: {
 											label: 'Annuler',
@@ -261,7 +261,7 @@ definePageMeta({
 	},
 });
 const { data, error } = await useFetch(
-	'/api/user/' + useSession().data.value?.user?.email
+	'/api/users/' + useSession().data.value?.user?.email
 );
 const state = reactive<{
 	currentTab: number;
@@ -294,7 +294,7 @@ const handleTabs = (i: number) => {
 	state.currentTab = i;
 };
 const handleSubmitUpdate = () => {
-	const { data, error } = useFetch('/api/user/', {
+	const { data, error } = useFetch('/api/users/', {
 		method: 'put',
 		body: {
 			email: state.user.email,
@@ -327,7 +327,7 @@ const handleInputPasswords = () => {
 	}
 };
 const handleSubmitPasswordUpdate = async () => {
-	const { data, error } = await useFetch('/api/user/update-password', {
+	const { data, error } = await useFetch('/api/users/update-password', {
 		method: 'put',
 		body: {
 			email: state.user.email,
@@ -353,7 +353,7 @@ const handleSubmitPasswordUpdate = async () => {
 };
 
 const handleDeleteEverything = async () => {
-	const { data } = await useFetch('/api/user/delete', {
+	const { data } = await useFetch('/api/users/delete', {
 		method: 'delete',
 		body: {
 			email: state.user.email,
