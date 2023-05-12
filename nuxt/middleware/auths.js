@@ -5,16 +5,24 @@ const rolesEquivalent = {
 	admin: 3,
 };
 
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
 	const { status, signIn, data } = useSession();
 	if (status.value === 'authenticated') {
 		if (
 			to.meta.meta.authority <=
 			rolesEquivalent[data.value?.user.role.slug]
 		) {
-			return;
+			if (
+				to.meta.meta.right &&
+				(await checkAuthorization(
+					to.meta.meta.right.object,
+					to.meta.meta.right.operation
+				)) === true
+			)
+				return;
+			return signIn(undefined, { callbackUrl: to.path });
 		} else {
-			return navigateTo('/', { replace: true });
+			return signIn(undefined, { callbackUrl: to.path });
 		}
 	}
 

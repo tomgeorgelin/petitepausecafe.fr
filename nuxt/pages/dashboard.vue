@@ -6,12 +6,11 @@
 	>
 		<div class="flex flex-wrap mx-auto">
 			<div
-				class="w-1/4 p-2"
-				v-for="(item, index) in state.items"
+				class="w-min-1/4 p-2"
+				v-for="(item, index) in state.items.filter((i) => i.display)"
 				:key="index"
 			>
 				<div
-					v-if="item.display"
 					class="bg-white shadow-lg rounded-lg w-full min-h-[150px] flex flex-col justify-between p-5"
 				>
 					<div class="text-sm text-gray-500">
@@ -45,6 +44,12 @@ const state = reactive({
 	items: [
 		{
 			category: 'Gestion',
+			title: 'Gestion des rôles',
+			link: '/manage/roles',
+			display: await checkAuthorization('roles', 'manage'),
+		},
+		{
+			category: 'Gestion',
 			title: 'Gestion des utilisateurs',
 			link: '/manage/users',
 			display: await checkAuthorization('users', 'manage'),
@@ -66,6 +71,13 @@ const state = reactive({
 			title: 'Gestion des commentaires',
 			link: '/manage/comments',
 			display: await checkAuthorization('comments', 'manage'),
+		},
+		{
+			category: 'Gestion',
+			title: 'Gestion des permissions',
+			link: '/manage/permissions',
+			display:
+				true || (await checkAuthorization('permissions', 'manage')),
 		},
 	],
 });

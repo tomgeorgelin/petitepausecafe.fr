@@ -117,6 +117,7 @@ definePageMeta({
 	middleware: 'auths',
 	meta: {
 		authority: 3,
+		right: { object: 'users', operation: 'manage' },
 	},
 });
 import type { Header, Item } from 'vue3-easy-data-table';
