@@ -76,13 +76,6 @@ const state = reactive({
 			link: '/manage/comments',
 			display: await checkAuthorization('comments', 'manage'),
 		},
-		{
-			category: 'Gestion',
-			title: 'Gestion des permissions',
-			link: '/manage/permissions',
-			display:
-				true || (await checkAuthorization('permissions', 'manage')),
-		},
 	],
 });
 </script>
