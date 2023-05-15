@@ -38,6 +38,10 @@ definePageMeta({
 	middleware: 'auths',
 	meta: {
 		authority: 2,
+		right: {
+			operation: 'manage',
+			object: 'dashboard',
+		},
 	},
 });
 const state = reactive({

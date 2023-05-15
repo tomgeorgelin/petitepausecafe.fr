@@ -126,9 +126,11 @@ const handleChange = async (
 	}
 };
 
-const ALL_PERMISSIONS: [
-	{ name: string; operations: [{ name: string }]; role: string }
-] = [
+const ALL_PERMISSIONS: { name: string; operations: { name: string }[] }[] = [
+	{
+		name: 'dashboard',
+		operations: [{ name: 'manage' }],
+	},
 	{
 		name: 'categories',
 		operations: [
@@ -187,10 +189,8 @@ const ALL_PERMISSIONS: [
 ];
 
 const addExistsField = (
-	fullData: [{ name: string; operations: [{ name: string }]; role: string }],
-	partialData: [
-		{ name: string; operations: [{ name: string }]; role: string }
-	]
+	fullData: { name: string; operations: { name: string }[] }[],
+	partialData: { name: string; operations: { name: string }[] }[]
 ) => {
 	return fullData.map((fullItem) => {
 		const operations = fullItem.operations.map((operation) => {
