@@ -2,7 +2,7 @@
 	<Header />
 	<section class="my-10 w-[95%] md:w-[70%] xl:w-[50%] mx-auto">
 		<div class="w-full text-right my-5">
-			<span>Personne recherchée : </span>
+			<span>Rôle recherchée : </span>
 			<input
 				type="text"
 				placeholder="Nom"
@@ -57,6 +57,29 @@
 		c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
 		s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
 		c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"
+								/>
+							</g>
+						</svg>
+					</div>
+					<div
+						@click="
+							navigateTo('/manage/permissions?role=' + item.slug)
+						"
+					>
+						<svg
+							version="1.0"
+							class="hover:fill-tint cursor-pointer"
+							xmlns="http://www.w3.org/2000/svg"
+							width="25px"
+							height="25px"
+							viewBox="0 0 877.000000 1280.000000"
+							preserveAspectRatio="xMidYMid meet"
+						>
+							<g
+								transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"
+							>
+								<path
+									d="M4115 12785 c-659 -72 -1254 -378 -1775 -911 -310 -318 -530 -633 -745 -1069 -329 -667 -501 -1379 -522 -2158 l-6 -239 -26 -10 c-240 -98 -472 -258 -624 -432 -231 -265 -363 -559 -406 -906 -8 -57 -11 -746 -11 -2090 0 -2181 -1 -2123 56 -2378 81 -363 250 -703 508 -1026 97 -122 337 -365 463 -468 654 -540 1524 -902 2493 -1037 320 -45 480 -55 865 -55 385 0 545 10 865 55 969 135 1839 497 2493 1037 126 103 366 346 463 468 258 323 427 663 508 1026 57 255 56 197 56 2378 0 1344 -3 2033 -11 2090 -43 347 -175 641 -406 906 -152 174 -384 334 -624 432 l-26 10 -6 239 c-15 565 -111 1096 -290 1608 -151 433 -378 871 -627 1210 -219 299 -515 595 -805 805 -550 398 -1224 584 -1860 515z m582 -1544 c392 -83 720 -294 994 -638 208 -261 392 -636 495 -1012 85 -309 129 -595 142 -920 l7 -161 -1950 0 -1950 0 7 161 c22 547 142 1046 353 1474 321 651 796 1033 1385 1115 109 15 411 4 517 -19z m-105 -5116 c383 -67 704 -297 887 -637 85 -156 124 -287 143 -477 42 -416 -147 -840 -489 -1097 l-73 -55 0 -570 0 -569 -675 0 -675 0 0 569 0 570 -73 55 c-489 368 -636 1037 -346 1574 181 337 501 568 881 637 100 18 317 18 420 0z"
 								/>
 							</g>
 						</svg>
@@ -118,24 +141,22 @@ definePageMeta({
 	middleware: 'auths',
 	meta: {
 		authority: 3,
-		right: { object: 'users', operation: 'manage' },
+		right: { object: 'roles', operation: 'manage' },
 	},
 });
 import type { Header, Item } from 'vue3-easy-data-table';
 let items: any = [];
-const { data } = await useFetch('/api/users');
-if (data.value && data.value.users) {
-	items = data.value.users;
+const { data } = await useFetch('/api/roles');
+if (data.value && data.value.roles) {
+	items = data.value.roles;
 }
 const searchValue = ref('');
 const handleEdit = (item: any) => {
-	navigateTo('/manage/users/' + item.email);
+	navigateTo('/manage/roles/' + item.slug);
 };
 const headers: Header[] = [
 	{ text: 'Nom', value: 'name', sortable: true },
-	{ text: 'Email', value: 'email', sortable: true },
-	{ text: 'Rôle', value: 'role_id.name', sortable: true },
-	{ text: 'Description', value: 'description', sortable: true },
+	{ text: 'Slug', value: 'slug', sortable: true },
 	{ text: 'Actions', value: 'operation' },
 ];
 </script>
