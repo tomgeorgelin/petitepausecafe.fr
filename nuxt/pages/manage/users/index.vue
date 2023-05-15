@@ -136,6 +136,6 @@ const headers: Header[] = [
 	{ text: 'Email', value: 'email', sortable: true },
 	{ text: 'Rôle', value: 'role_id.name', sortable: true },
 	{ text: 'Description', value: 'description', sortable: true },
-	{ text: 'Actions', value: 'operation' },
+	// { text: 'Actions', value: 'operation' },
 ];
 </script>
