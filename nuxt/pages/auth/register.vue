@@ -237,7 +237,11 @@ export default {
 					method: 'post',
 					body: { user },
 				});
-				if (data.value?.message === 'ko') {
+				if (
+					data.value &&
+					data.value.message &&
+					data.value?.message === 'ko'
+				) {
 					this.error = true;
 				} else {
 					this.error = false;
