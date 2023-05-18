@@ -129,7 +129,7 @@
 definePageMeta({
 	middleware: 'auths',
 	meta: {
-		authority: 3,
+		authority: 2,
 		right: { object: 'comments', operation: 'manage' },
 	},
 });
@@ -180,6 +180,8 @@ const headers: Header[] = [
 	{ text: 'Utilisateur', value: 'user_id.name', sortable: true },
 	{ text: 'Article', value: 'article_id.title', sortable: true },
 	{ text: 'Texte', value: 'body' },
-	{ text: 'Actions', value: 'operation' },
 ];
+if (await checkAuthorization('comments', 'moderate')) {
+	headers.push({ text: 'Actions', value: 'operation' });
+}
 </script>
