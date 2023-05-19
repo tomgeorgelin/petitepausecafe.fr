@@ -30,6 +30,12 @@ lowlight.registerLanguage('css', css);
 lowlight.registerLanguage('js', js);
 lowlight.registerLanguage('ts', ts);
 export default {
+	props: {
+		updateBody: {
+			type: Function,
+			required: true,
+		},
+	},
 	components: {
 		EditorContent,
 	},
@@ -39,81 +45,84 @@ export default {
 			res: '',
 		};
 	},
-	mounted() {
-		this.editor = new Editor({
-			content: '<p>I’m running Tiptap with Vue.js. 🎉</p>',
-			extensions: [
-				StarterKit.configure({
-					heading: false,
-					bulletList: false,
-					bold: {
-						HTMLAttributes: {
-							class: 'font-semibold',
+	setup(props) {
+		onMounted(() => {
+			getCurrentInstance().data.editor = new Editor({
+				content: '',
+				extensions: [
+					StarterKit.configure({
+						heading: false,
+						bulletList: false,
+						bold: {
+							HTMLAttributes: {
+								class: 'font-semibold',
+							},
 						},
-					},
-					code: {
-						HTMLAttributes: {
-							class: 'rounded-lg p-2 bg-black text-white',
+						code: {
+							HTMLAttributes: {
+								class: 'rounded-lg p-2 bg-black text-white',
+							},
 						},
-					},
-					codeBlock: {
-						HTMLAttributes: {
-							class: 'rounded-lg p-2 bg-black text-white',
+						codeBlock: {
+							HTMLAttributes: {
+								class: 'rounded-lg p-2 bg-black text-white',
+							},
 						},
-					},
-				}),
-				TextStyle,
-				Color,
-				TextAlign.configure({
-					types: ['heading', 'paragraph'],
-				}),
-				Underline.configure({
-					types: ['heading', 'paragraph'],
-				}),
-				Heading.configure({ levels: [1, 2] }).extend({
-					levels: [1, 2],
-					renderHTML({ node, HTMLAttributes }) {
-						const level = this.options.levels.includes(
-							node.attrs.level
-						)
-							? node.attrs.level
-							: this.options.levels[0];
-						const classes = {
-							1: 'text-4xl',
-							2: 'text-2xl',
-						};
-						return [
-							`h${level}`,
-							mergeAttributes(
-								this.options.HTMLAttributes,
-								HTMLAttributes,
-								{
-									class: `${classes[level]}`,
-								}
-							),
-							0,
-						];
-					},
-				}),
-				BulletList.configure({
-					itemTypeName: 'listItem',
-					HTMLAttributes: {
-						class: 'list-disc',
-					},
-				}),
-				Link.configure({
-					HTMLAttributes: {
-						class: 'text-tint hover:underline decoration-tint',
-					},
-				}),
-				Highlight.configure({
-					multicolor: true,
-				}),
-			],
-			onUpdate: ({ editor }) => {
-				// this.res = editor.getHTML();
-				this.$emit('update:res', editor.getHTML());
-			},
+					}),
+					TextStyle,
+					Color,
+					TextAlign.configure({
+						types: ['heading', 'paragraph'],
+					}),
+					Underline.configure({
+						types: ['heading', 'paragraph'],
+					}),
+					Heading.configure({ levels: [1, 2] }).extend({
+						levels: [1, 2],
+						renderHTML({ node, HTMLAttributes }) {
+							const level = this.options.levels.includes(
+								node.attrs.level
+							)
+								? node.attrs.level
+								: this.options.levels[0];
+							const classes = {
+								1: 'text-4xl',
+								2: 'text-2xl',
+							};
+							return [
+								`h${level}`,
+								mergeAttributes(
+									this.options.HTMLAttributes,
+									HTMLAttributes,
+									{
+										class: `${classes[level]}`,
+									}
+								),
+								0,
+							];
+						},
+					}),
+					BulletList.configure({
+						itemTypeName: 'listItem',
+						HTMLAttributes: {
+							class: 'list-disc',
+						},
+					}),
+					Link.configure({
+						HTMLAttributes: {
+							class: 'text-tint hover:underline decoration-tint',
+						},
+					}),
+					Highlight.configure({
+						multicolor: true,
+					}),
+				],
+				onUpdate: ({ editor }) => {
+					// this.res = editor.getHTML();
+					props.updateBody(editor.getHTML());
+					// this.$emit('update:res', editor.getHTML());
+				},
+			});
 		});
 	},
 	beforeUnmount() {
