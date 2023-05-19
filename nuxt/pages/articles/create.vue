@@ -154,7 +154,9 @@ if (data.value && data.value.message && data.value.message === 'ok') {
 }
 if (slug && (await checkAuthorization('articles', 'update'))) {
 	const { data } = await useFetch('/api/articles/' + slug);
+	// @ts-ignore
 	if (data.value && data.value.message && data.value.message === 'ok') {
+		// @ts-ignore
 		article = data.value.article;
 	}
 }
