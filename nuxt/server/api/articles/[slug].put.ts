@@ -10,11 +10,9 @@ export default defineEventHandler(async (event) => {
 		// Update article
 		try {
 			await Article.findOneAndUpdate({ slug: slug }, body);
-			return { message: 'Article updated' };
+			return { message: 'ok' };
 		} catch (e: any) {
-			throw createError({
-				message: e.message,
-			});
+			return { message: 'ko' };
 		}
 	}
 });

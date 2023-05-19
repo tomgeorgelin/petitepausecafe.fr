@@ -17,7 +17,7 @@
 					v-for="cat in categories"
 					:key="cat._id"
 					:value="cat._id"
-					class=""
+					:selected="cat._id === state.category_id"
 				>
 					{{ cat.name }}
 				</option>
@@ -103,7 +103,7 @@
 			/>
 		</div>
 		<!-- body -->
-		<WYSIWYGTipTap :updateBody="updateBody" />
+		<WYSIWYGTipTap :updateBody="updateBody" :body="state.body" />
 
 		<div id="button" class="flex flex-col w-full my-5">
 			<button
@@ -143,22 +143,32 @@ definePageMeta({
 		right: { object: 'articles', operation: 'create' },
 	},
 });
+const route = useRoute();
+const slug = route.query.slug;
 const { $toast } = useNuxtApp();
 const { data } = await useFetch('/api/categories');
 let categories: any = [];
+let article: any = {};
 if (data.value && data.value.message && data.value.message === 'ok') {
 	categories = data.value.categories;
 }
+if (slug) {
+	const { data } = await useFetch('/api/articles/' + slug);
+	if (data.value && data.value.message && data.value.message === 'ok') {
+		article = data.value.article;
+	}
+}
 const state = reactive({
-	body: '',
-	description: '',
-	seo_description: '',
-	active: false,
-	title: '',
-	image: '',
-	category_id: '',
-	seo_title: '',
-	seo_keywords: '',
+	slug: article.slug ?? '',
+	body: article.body ?? '',
+	description: article.description ?? '',
+	seo_description: article.seo_description ?? '',
+	active: article.active ?? false,
+	title: article.title ?? '',
+	image: article.image ?? '',
+	category_id: article.category_id._id ?? '',
+	seo_title: article.seo_title ?? '',
+	seo_keywords: article.seo_keywords ?? '',
 });
 const updateBody = (text: string) => {
 	state.body = text;
@@ -172,35 +182,76 @@ const handleSubmitUpdate = async () => {
 		state.description !== '' ||
 		state.image !== ''
 	) {
-		const { data } = await useFetch('/api/articles/create', {
-			method: 'post',
-			body: {
-				body: state.body,
-				title: state.title,
-				description: state.description,
-				seo_title: state.seo_title,
-				seo_description: state.seo_description,
-				seo_keywords: state.seo_keywords,
-				active: state.active,
-				image: state.image,
-				user_email: useSession().data.value?.user?.email,
-				category_id: state.category_id,
-			},
-		});
-		if (data.value && data.value.message && data.value.message === 'ok') {
-			$toast.show({
-				title: 'Article enregistré',
-				type: 'success',
-				timeout: 10,
-				pauseOnHover: true,
+		if (state.slug != '') {
+			const { data } = await useFetch('/api/articles/' + state.slug, {
+				method: 'put',
+				body: {
+					body: state.body,
+					title: state.title,
+					description: state.description,
+					seo_title: state.seo_title,
+					seo_description: state.seo_description,
+					seo_keywords: state.seo_keywords,
+					active: state.active,
+					image: state.image,
+					user_email: useSession().data.value?.user?.email,
+					category_id: state.category_id,
+				},
 			});
+			if (
+				data.value &&
+				data.value.message &&
+				data.value.message === 'ok'
+			) {
+				$toast.show({
+					title: 'Article mis à jour',
+					type: 'success',
+					timeout: 10,
+					pauseOnHover: true,
+				});
+			} else {
+				$toast.show({
+					title: 'Erreur lors de la mise à jour',
+					type: 'danger',
+					timeout: 10,
+					pauseOnHover: true,
+				});
+			}
 		} else {
-			$toast.show({
-				title: "Erreur lors de l'enregistrement",
-				type: 'danger',
-				timeout: 10,
-				pauseOnHover: true,
+			const { data } = await useFetch('/api/articles/create', {
+				method: 'post',
+				body: {
+					body: state.body,
+					title: state.title,
+					description: state.description,
+					seo_title: state.seo_title,
+					seo_description: state.seo_description,
+					seo_keywords: state.seo_keywords,
+					active: state.active,
+					image: state.image,
+					user_email: useSession().data.value?.user?.email,
+					category_id: state.category_id,
+				},
 			});
+			if (
+				data.value &&
+				data.value.message &&
+				data.value.message === 'ok'
+			) {
+				$toast.show({
+					title: 'Article enregistré',
+					type: 'success',
+					timeout: 10,
+					pauseOnHover: true,
+				});
+			} else {
+				$toast.show({
+					title: "Erreur lors de l'enregistrement",
+					type: 'danger',
+					timeout: 10,
+					pauseOnHover: true,
+				});
+			}
 		}
 	} else {
 		$toast.show({

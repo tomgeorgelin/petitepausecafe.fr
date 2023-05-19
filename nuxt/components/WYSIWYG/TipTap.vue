@@ -35,6 +35,10 @@ export default {
 			type: Function,
 			required: true,
 		},
+		body: {
+			type: String,
+			required: true,
+		},
 	},
 	components: {
 		EditorContent,
@@ -48,7 +52,7 @@ export default {
 	setup(props) {
 		onMounted(() => {
 			getCurrentInstance().data.editor = new Editor({
-				content: '',
+				content: props.body,
 				extensions: [
 					StarterKit.configure({
 						heading: false,

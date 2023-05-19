@@ -138,7 +138,11 @@ definePageMeta({
 });
 import type { Header } from 'vue3-easy-data-table';
 let items: any = [];
-const { data } = await useFetch('/api/articles');
+const { data } = await useFetch('/api/articles', {
+	query: {
+		admin: true,
+	},
+});
 // @ts-ignore
 if (data.value && data.value.articles) {
 	// @ts-ignore
@@ -146,7 +150,10 @@ if (data.value && data.value.articles) {
 }
 const searchValue = ref('');
 const handleEdit = (item: any) => {
-	navigateTo('/manage/articles/' + item.slug);
+	navigateTo({
+		path: '/articles/create',
+		query: { slug: item.slug },
+	});
 };
 const headers: Header[] = [
 	{ text: '#', value: '_id' },

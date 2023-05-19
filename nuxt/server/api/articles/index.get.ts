@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 	let articles;
 	const query = getQuery(event);
 	if (query.latest) {
-		articles = await Article.find()
+		articles = await Article.find({ active: true })
 			.sort({ created_at: -1 })
 			.limit(10)
 			.populate('user_id')
@@ -13,12 +13,12 @@ export default defineEventHandler(async (event) => {
 	} else if (query.random) {
 		const number = await Article.count();
 		var random = Math.floor(Math.random() * number);
-		articles = await Article.findOne()
+		articles = await Article.findOne({ active: true })
 			.skip(random)
 			.populate('user_id')
 			.populate('category_id');
 	} else if (query.popular) {
-		articles = await Article.find()
+		articles = await Article.find({ active: true })
 			.sort({ created_at: -1 })
 			.limit(4)
 			.populate('user_id')
@@ -37,8 +37,13 @@ export default defineEventHandler(async (event) => {
 			.limit(4)
 			.populate('user_id')
 			.populate('category_id');
+	} else if (query.admin) {
+		articles = await Article.find()
+			.sort({ created_at: -1 })
+			.populate('user_id')
+			.populate('category_id');
 	} else {
-		articles = await Article.find({})
+		articles = await Article.find({ active: true })
 			.limit(10)
 			.sort({ created_at: -1 })
 			.populate('user_id')
