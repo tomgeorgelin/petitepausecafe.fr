@@ -8,10 +8,11 @@ export default defineEventHandler(async (event) => {
 	body.slug = slug(body.title);
 	// create article
 	try {
-		body.user_id = (await User.findOne({ email: body.email }))._id;
+		body.user_id = (await User.findOne({ email: body.user_email }))._id;
 		await Article.create(body);
 		return { message: 'ok' };
 	} catch (e: any) {
+		console.log(e);
 		return { message: 'ko' };
 	}
 });

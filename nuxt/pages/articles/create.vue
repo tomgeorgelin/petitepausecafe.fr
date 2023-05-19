@@ -44,6 +44,7 @@
 				rows="4"
 				placeholder="Votre description"
 				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
+				v-model="state.description"
 			></textarea>
 		</div>
 		<div class="flex flex-col w-full my-5">
@@ -67,6 +68,7 @@
 				rows="4"
 				placeholder="Votre description SEO"
 				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
+				v-model="state.seo_description"
 			></textarea>
 		</div>
 		<div class="flex flex-col w-full my-5">
@@ -88,7 +90,7 @@
 				id="image"
 				placeholder="URL pour l'image"
 				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
-				v-model="state.seo_keywords"
+				v-model="state.image"
 			/>
 		</div>
 		<div class="flex flex-row gap-3 items-center my-5">
@@ -185,6 +187,7 @@ const handleSubmitUpdate = async () => {
 				category_id: state.category_id,
 			},
 		});
+		console.log(data.value);
 		if (data.value && data.value.message && data.value.message === 'ok') {
 			$toast.show({
 				title: 'Article enregistré',
