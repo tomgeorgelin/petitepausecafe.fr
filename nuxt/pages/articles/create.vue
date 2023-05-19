@@ -152,7 +152,7 @@ let article: any = {};
 if (data.value && data.value.message && data.value.message === 'ok') {
 	categories = data.value.categories;
 }
-if (slug) {
+if (slug && (await checkAuthorization('articles', 'update'))) {
 	const { data } = await useFetch('/api/articles/' + slug);
 	if (data.value && data.value.message && data.value.message === 'ok') {
 		article = data.value.article;
@@ -166,7 +166,7 @@ const state = reactive({
 	active: article.active ?? false,
 	title: article.title ?? '',
 	image: article.image ?? '',
-	category_id: article.category_id._id ?? '',
+	category_id: article.category_id ? article.category_id._id : '',
 	seo_title: article.seo_title ?? '',
 	seo_keywords: article.seo_keywords ?? '',
 });
