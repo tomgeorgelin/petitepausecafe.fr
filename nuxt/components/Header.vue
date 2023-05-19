@@ -140,6 +140,12 @@ if (useSession().status.value === 'authenticated') {
 			callback: () => navigateTo('/articles/create'),
 		});
 	}
+	if (await checkAuthorization('dashboard', 'manage')) {
+		state.items.unshift({
+			title: 'Gérer les données',
+			callback: () => navigateTo('/manage/'),
+		});
+	}
 	state.items.unshift({
 		title: 'Mes données',
 		callback: () => navigateTo('/profil'),

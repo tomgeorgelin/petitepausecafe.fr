@@ -187,7 +187,6 @@ const handleSubmitUpdate = async () => {
 				category_id: state.category_id,
 			},
 		});
-		console.log(data.value);
 		if (data.value && data.value.message && data.value.message === 'ok') {
 			$toast.show({
 				title: 'Article enregistré',

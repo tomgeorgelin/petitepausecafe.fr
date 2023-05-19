@@ -1,5 +1,4 @@
 import { Article } from '~/server/models/Article.model';
-import { Category } from '~/server/models/Category.model';
 import { User } from '~/server/models/User.model';
 import { slug } from '~/server/utils/index';
 export default defineEventHandler(async (event) => {
