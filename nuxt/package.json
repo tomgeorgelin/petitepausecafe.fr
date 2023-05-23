@@ -16,6 +16,7 @@
 		"@sidebase/nuxt-auth": "^0.4.2",
 		"@types/jsonwebtoken": "^9.0.1",
 		"@types/nodemailer": "^6.4.7",
+		"@vite-pwa/nuxt": "^0.0.9",
 		"joi": "^17.7.0",
 		"nuxt": "^3.4.2",
 		"sass": "^1.59.2",
