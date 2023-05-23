@@ -27,7 +27,6 @@ export default defineNuxtConfig({
 				},
 				{ rel: 'icon', sizes: '32x32', href: '/favicon-32x32.png' },
 				{ rel: 'icon', sizes: '16x16', href: '/favicon-16x16.png' },
-				{ rel: 'manifest', href: '/site.webmanifest' },
 			],
 		},
 	},
@@ -50,6 +49,46 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		mongodbUri: process.env.MONGODB_URI,
 		JWT_KEY: process.env.JWT_KEY,
+	},
+	pwa: {
+		registerType: 'autoUpdate',
+		registerWebManifestInRouteRules: true,
+		manifest: {
+			name: 'petitepausecafe.fr',
+			start_url: '/',
+			short_name: 'petitepausecafe.fr',
+			theme_color: '#FF5480',
+			description: 'Vous retrouverez ici tous les articles du site !',
+			icons: [
+				{
+					src: 'icons/android-chrome-512x512.png',
+					sizes: '512x512',
+					type: 'image/png',
+				},
+				{
+					src: 'icons/android-chrome-192x192.png',
+					sizes: '192x192',
+					type: 'image/png',
+				},
+				{
+					src: 'icons/favicon-16x16.png',
+					sizes: '16x16',
+					type: 'image/png',
+				},
+				{
+					src: 'icons/favicon-32x32.png',
+					sizes: '32x32',
+					type: 'image/png',
+				},
+			],
+		},
+		devOptions: {
+			enabled: true,
+			type: 'module',
+		},
+		workbox: {
+			navigateFallback: '/',
+		},
 	},
 	vite: {
 		build: {
