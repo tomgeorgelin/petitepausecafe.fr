@@ -111,10 +111,10 @@ import { checkAuthorization } from '~~/utils/index';
 const toggleNavbar = () => {
 	state.showMenu = !state.showMenu;
 };
-const callback = () => {
+const callback = async () => {
 	const session = useSession();
 	if (session.status.value === 'authenticated') {
-		session.signOut();
+		await session.signOut();
 	} else {
 		navigateTo('/auth/login');
 	}
@@ -137,17 +137,20 @@ if (useSession().status.value === 'authenticated') {
 	if (await checkAuthorization('articles', 'create')) {
 		state.items.unshift({
 			title: 'Créer un article',
+			// @ts-ignore
 			callback: () => navigateTo('/articles/create'),
 		});
 	}
 	if (await checkAuthorization('dashboard', 'manage')) {
 		state.items.unshift({
 			title: 'Gérer les données',
+			// @ts-ignore
 			callback: () => navigateTo('/manage/'),
 		});
 	}
 	state.items.unshift({
 		title: 'Mes données',
+		// @ts-ignore
 		callback: () => navigateTo('/profil'),
 	});
 }

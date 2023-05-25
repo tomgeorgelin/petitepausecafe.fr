@@ -21,11 +21,12 @@
 						useSession().status.value === 'authenticated' &&
 						comment.user_id !== null &&
 						(comment.user_id._id ===
-							useSession().data.value.user.id ||
-							permission)
+							// @ts-ignore
+							useSession().data?.value?.user?.id ||
+							state.permission)
 					"
 					class="text-gray-600 text-xs hover:underline cursor-pointer"
-					@click="this.handleDelete()"
+					@click="handleDelete()"
 				>
 					Supprimer
 				</div>
@@ -46,23 +47,23 @@
 				v-if="useSession().status.value === 'authenticated'"
 			>
 				<div
-					@click="this.handleToggleAddComment()"
+					@click="handleToggleAddComment()"
 					class="cursor-pointer px-3 py-2 w-fit ml-auto text-xs font-semibold border text-gray-500 border-gray-500 rounded-md"
 				>
-					{{ !toggleAddComment ? 'Répondre' : 'Annuler' }}
+					{{ !state.toggleAddComment ? 'Répondre' : 'Annuler' }}
 				</div>
 			</div>
 		</div>
 		<div class="mt-2">
 			{{ comment.body }}
 		</div>
-		<div v-if="toggleAddComment">
+		<div v-if="state.toggleAddComment">
 			<textarea
 				class="w-full mt-5 border rounded-md focus:outline-none focus:ring-2 focus:ring-tint"
-				v-model="body"
+				v-model="state.body"
 			></textarea>
 			<div
-				@click="this.handleAddComment()"
+				@click="handleAddComment()"
 				class="cursor-pointer px-3 py-2 w-fit ml-auto text-xs font-semibold border border-tint text-tint rounded-md"
 			>
 				Envoyer
@@ -71,7 +72,7 @@
 	</div>
 	<div class="ml-10 my-5">
 		<CommonComment
-			v-for="(comment, index) in comment.replies"
+			v-for="(comment, index) in props.comment.replies"
 			:comment="comment"
 			:key="index"
 			:article_id="article_id"
@@ -80,63 +81,60 @@
 	<hr class="my-10" v-if="comment.parent_id === null" />
 </template>
 
-<script>
-export default {
-	props: {
-		comment: {
-			type: Object,
-			required: true,
-		},
-		article_id: {
-			type: String,
-			required: true,
-		},
+<script lang="ts" setup>
+let perm = false;
+if (useSession().status.value === 'authenticated') {
+	if (await checkAuthorization('comments', 'moderate')) {
+		perm = true;
+	}
+}
+const state = reactive({
+	toggleAddComment: false,
+	body: '',
+	permission: perm,
+});
+const props = defineProps({
+	comment: {
+		type: Object,
+		required: true,
 	},
-	async setup() {
-		let perm = false;
-		if (useSession().status.value === 'authenticated') {
-			if (await checkAuthorization('comments', 'moderate')) {
-				perm = true;
-			}
-		}
-		return {
-			toggleAddComment: false,
-			body: '',
-			permission: perm,
-		};
+	article_id: {
+		type: String,
+		required: true,
 	},
-	methods: {
-		handleToggleAddComment() {
-			this.toggleAddComment = !this.toggleAddComment;
+});
+const handleToggleAddComment = () => {
+	state.toggleAddComment = !state.toggleAddComment;
+};
+const handleDelete = async () => {
+	const { data, error } = await useFetch(
+		'/api/comments/' + props.comment._id,
+		{ method: 'put' }
+	);
+	// @ts-ignore
+	if (data.value && data.value.message && data.value.message === 'ko') {
+		console.log('#TODO');
+	} else {
+		console.log('#TODO ERROR');
+	}
+};
+const handleAddComment = async () => {
+	const { data, error } = await useFetch('/api/comments', {
+		method: 'post',
+		body: {
+			email: useSession().data?.value?.user?.email ?? '',
+			body: state.body,
+			parent: props.comment._id,
+			article_id: props.article_id,
 		},
-		async handleDelete() {
-			const { data, error } = await useFetch(
-				'/api/comments/' + this.comment._id,
-				{ method: 'put' }
-			);
-			if (data.value.message === 'ko') {
-				console.log('#TODO');
-			} else {
-				console.log(data.value.message);
-			}
-		},
-		async handleAddComment() {
-			const { data, error } = await useFetch('/api/comments', {
-				method: 'post',
-				body: {
-					email: useSession().data.value.user.email,
-					body: this.body,
-					parent: this.comment._id,
-					article_id: this.article_id,
-				},
-			});
-			if (data.value && data.value.message === 'ok') {
-				this.toggleAddComment = false;
-				this.body = '';
-				data.value.comment.replies = [];
-				this.comment.replies.push(data.value.comment);
-			}
-		},
-	},
+	});
+	if (data.value && data.value.message === 'ok') {
+		state.toggleAddComment = false;
+		state.body = '';
+		// @ts-ignore
+		data.value.comment.replies = [];
+		// @ts-ignore
+		props.comment.replies.push(data.value.comment);
+	}
 };
 </script>
