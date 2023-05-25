@@ -126,7 +126,12 @@ definePageMeta({
 });
 import type { Header, Item } from 'vue3-easy-data-table';
 let items: any = [];
-const { data } = await useFetch('/api/users');
+const { data } = await useFetch('/api/users', {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
+});
 if (data.value && data.value.users) {
 	items = data.value.users;
 }

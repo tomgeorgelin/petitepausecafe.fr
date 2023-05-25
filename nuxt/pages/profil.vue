@@ -261,7 +261,13 @@ definePageMeta({
 	},
 });
 const { data, error } = await useFetch(
-	'/api/users/' + useSession().data.value?.user?.email
+	'/api/users/' + useSession().data.value?.user?.email,
+	{
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+	}
 );
 const state = reactive<{
 	currentTab: number;
@@ -295,6 +301,11 @@ const handleTabs = (i: number) => {
 };
 const handleSubmitUpdate = () => {
 	const { data, error } = useFetch('/api/users/', {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+
 		method: 'put',
 		body: {
 			email: state.user.email,
@@ -328,6 +339,11 @@ const handleInputPasswords = () => {
 };
 const handleSubmitPasswordUpdate = async () => {
 	const { data, error } = await useFetch('/api/users/update-password', {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+
 		method: 'put',
 		body: {
 			email: state.user.email,
@@ -354,6 +370,11 @@ const handleSubmitPasswordUpdate = async () => {
 
 const handleDeleteEverything = async () => {
 	const { data } = await useFetch('/api/users/delete', {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+
 		method: 'delete',
 		body: {
 			email: state.user.email,

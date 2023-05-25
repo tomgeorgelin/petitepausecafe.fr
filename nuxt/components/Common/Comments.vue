@@ -91,6 +91,12 @@ export default {
 		},
 		async handleAddComment() {
 			const { data, error } = await useFetch('/api/comments', {
+				headers: {
+					// @ts-ignore
+					'x-auth-token':
+						useSession()?.data?.value?.user?.token || '',
+				},
+
 				method: 'post',
 				body: {
 					email: useSession().data.value.user.email,

@@ -61,7 +61,12 @@ const { $toast, $modal } = useNuxtApp();
 const route = useRoute();
 const slug = route.params.slug;
 let role = { slug: '', name: '', _id: '' };
-const { data } = await useFetch('/api/roles/' + slug);
+const { data } = await useFetch('/api/roles/' + slug, {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
+});
 // @ts-ignore
 if (data.value && data.value.role) {
 	// @ts-ignore
@@ -75,6 +80,11 @@ const state: {
 
 const handleSubmitUpdate = () => {
 	const { data, error } = useFetch('/api/roles/', {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+
 		method: 'put',
 		body: {
 			slug: state.role.slug,

@@ -109,7 +109,14 @@ const handleToggleAddComment = () => {
 const handleDelete = async () => {
 	const { data, error } = await useFetch(
 		'/api/comments/' + props.comment._id,
-		{ method: 'put' }
+		{
+			headers: {
+				// @ts-ignore
+				'x-auth-token': useSession()?.data?.value?.user?.token || '',
+			},
+
+			method: 'put',
+		}
 	);
 	// @ts-ignore
 	if (data.value && data.value.message && data.value.message === 'ko') {
@@ -120,6 +127,10 @@ const handleDelete = async () => {
 };
 const handleAddComment = async () => {
 	const { data, error } = await useFetch('/api/comments', {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
 		method: 'post',
 		body: {
 			email: useSession().data?.value?.user?.email ?? '',

@@ -186,6 +186,12 @@ const handleSubmitUpdate = async () => {
 	) {
 		if (state.slug != '') {
 			const { data } = await useFetch('/api/articles/' + state.slug, {
+				headers: {
+					// @ts-ignore
+					'x-auth-token':
+						useSession()?.data?.value?.user?.token || '',
+				},
+
 				method: 'put',
 				body: {
 					body: state.body,
@@ -221,6 +227,12 @@ const handleSubmitUpdate = async () => {
 			}
 		} else {
 			const { data } = await useFetch('/api/articles/create', {
+				headers: {
+					// @ts-ignore
+					'x-auth-token':
+						useSession()?.data?.value?.user?.token || '',
+				},
+
 				method: 'post',
 				body: {
 					body: state.body,

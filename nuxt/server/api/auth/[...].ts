@@ -16,9 +16,9 @@ export default NuxtAuthHandler({
 	},
 	callbacks: {
 		jwt: async ({ token, user }) => {
-			const isSignIn = user ? true : false;
-			if (isSignIn) {
-				token.jwt = user ? (user as any).access_token || '' : '';
+			if (user) {
+				token.jwt =
+					(user as any).token || (user as any).access_token || '';
 				token.id = user ? user.id || '' : '';
 				token.role = user ? (user as any).role_id || '' : '';
 			}
@@ -27,6 +27,7 @@ export default NuxtAuthHandler({
 		session: async ({ session, token }) => {
 			(session as any).user.role = token.role;
 			(session as any).user.id = token.id;
+			(session as any).user.token = token.jwt;
 			return Promise.resolve(session);
 		},
 	},

@@ -88,7 +88,12 @@ definePageMeta({
 const { $toast } = useNuxtApp();
 const route = useRoute();
 const role = route.query.role;
-const { data } = await useFetch('/api/permissions/' + role);
+const { data } = await useFetch('/api/permissions/' + role, {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
+});
 let permissions: any = [];
 // @ts-ignore
 if (data.value && data.value.message && data.value.message === 'ok') {
@@ -101,6 +106,10 @@ const handleChange = async (
 	isAuthorized: boolean
 ) => {
 	const { data } = await useFetch('/api/permissions/', {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
 		method: 'post',
 		body: {
 			operation,

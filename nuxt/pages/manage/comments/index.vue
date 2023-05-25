@@ -144,6 +144,10 @@ const searchFields = ['body', '_id'];
 const { $toast } = useNuxtApp();
 const handleToggleActivation = async (item: any) => {
 	const { data } = await useFetch('/api/comments/' + item._id, {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
 		method: 'put',
 	});
 	// @ts-ignore

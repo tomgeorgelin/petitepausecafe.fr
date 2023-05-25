@@ -2,7 +2,7 @@
 	<Header />
 	<section class="my-10 w-[95%] md:w-[70%] xl:w-[50%] mx-auto">
 		<div class="w-full text-right my-5">
-			<span>Rôle recherchée : </span>
+			<span>Rôle recherché : </span>
 			<input
 				type="text"
 				placeholder="Nom"
@@ -146,7 +146,12 @@ definePageMeta({
 });
 import type { Header, Item } from 'vue3-easy-data-table';
 let items: any = [];
-const { data } = await useFetch('/api/roles');
+const { data } = await useFetch('/api/roles', {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
+});
 if (data.value && data.value.roles) {
 	items = data.value.roles;
 }

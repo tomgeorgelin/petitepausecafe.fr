@@ -82,6 +82,10 @@ const state: {
 });
 const handleSubmitUpdate = () => {
 	const { data, error } = useFetch('/api/categories/', {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
 		method: 'put',
 		body: {
 			slug: state.category.slug,
