@@ -71,9 +71,9 @@
 			</div>
 			<div class="px-3 mx-auto">
 				<img
-					src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/e8a9d756156319.59a3298196cba.jpg"
+					:src="article.image"
 					alt=""
-					class="mb-10 rounded-lg"
+					class="mb-10 rounded-lg w-full"
 				/>
 				<div v-html="article.body"></div>
 			</div>
