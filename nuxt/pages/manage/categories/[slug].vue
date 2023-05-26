@@ -80,8 +80,8 @@ const state: {
 } = reactive({
 	category,
 });
-const handleSubmitUpdate = () => {
-	const { data, error } = useFetch('/api/categories/', {
+const handleSubmitUpdate = async () => {
+	const { data, error } = await useFetch('/api/categories/', {
 		headers: {
 			// @ts-ignore
 			'x-auth-token': useSession()?.data?.value?.user?.token || '',

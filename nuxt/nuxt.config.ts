@@ -49,6 +49,9 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		mongodbUri: process.env.MONGODB_URI,
 		JWT_KEY: process.env.JWT_KEY,
+		MAIL_HOST: process.env.MAIL_HOST,
+		MAIL_AUTH_USER: process.env.MAIL_AUTH_USER,
+		MAIL_AUTH_PASS: process.env.MAIL_AUTH_PASS,
 	},
 	pwa: {
 		registerType: 'autoUpdate',

@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
 	if (route && token) {
 		const decodedToken = jwt.decode(token);
 		if (decodedToken) {
+			// @ts-ignore
 			const user = await User.findById(decodedToken.user_id);
 			if (user) {
 				const permission = await Permission.exists({
@@ -29,7 +30,6 @@ export default defineEventHandler(async (event) => {
 					object: route.object,
 				});
 				if (permission) {
-					console.log(route);
 					return;
 				}
 			}
@@ -105,10 +105,16 @@ const protectedRoutes = [
 	{
 		name: '/api/users',
 		method: 'DELETE',
-		object: 'users',
-		operation: 'delete',
+		object: 'user',
+		operation: 'manage',
 	},
 	{ name: '/api/users', method: 'GET', object: 'users', operation: 'manage' },
+	{
+		name: '/api/profile',
+		method: 'GET',
+		object: 'user',
+		operation: 'manage',
+	},
 	{ name: '/api/users', method: 'PUT', object: 'users', operation: 'update' },
 	{
 		name: '/api/users/update-password',

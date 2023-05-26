@@ -195,6 +195,10 @@ const ALL_PERMISSIONS: { name: string; operations: { name: string }[] }[] = [
 		name: 'users',
 		operations: [{ name: 'manage' }, { name: 'update' }],
 	},
+	{
+		name: 'user',
+		operations: [{ name: 'manage' }],
+	},
 ];
 
 const addExistsField = (

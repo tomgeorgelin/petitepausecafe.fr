@@ -1,6 +1,5 @@
 import jwt, { JwtPayload, decode } from 'jsonwebtoken';
 import { User } from '~~/server/models/User.model';
-import bcrypt from 'bcryptjs';
 const config = useRuntimeConfig();
 export default defineEventHandler(async (event) => {
 	const body: any = await readBody(event);
@@ -16,12 +15,17 @@ export default defineEventHandler(async (event) => {
 	}
 
 	if (decoded) {
-		const password = await bcrypt.hash(body.password, 10);
-		const user = await User.findOneAndUpdate(
-			{ email: decoded.email },
-			{ password }
-		);
-		user.save();
+		try {
+			const user = await User.findOneAndUpdate(
+				{ email: decoded.email },
+				{ verified: true }
+			);
+			user.save();
+		} catch {
+			return {
+				message: 'ko',
+			};
+		}
 	} else {
 		return {
 			message: 'ko',

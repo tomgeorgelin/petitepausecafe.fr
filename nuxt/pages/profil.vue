@@ -43,11 +43,18 @@
 		</ul>
 		<div class="basis-3/4">
 			<div v-if="state.currentTab === 0">
-				<div>
+				<div class="flex justify-between items-center">
 					Profil vérifé ? {{ state.user.verified ? '✅' : '❌' }}
+					<button
+						v-if="!state.user.verified"
+						@click="handleVerify()"
+						class="p-4 hover:bg-tint transition-colors duration-300 bg-gray-500 disabled:cursor-not-allowed rounded-lg text-white"
+					>
+						Vérifier mon compte
+					</button>
 				</div>
 				<div id="input" class="flex flex-col w-full my-5">
-					<label for="role" class="text-gray-500 mb-2">Role</label>
+					<label for="role" class="text-gray-500 mb-2">Rôle</label>
 					<div
 						type="text"
 						id="role"
@@ -258,17 +265,24 @@ definePageMeta({
 	middleware: 'auths',
 	meta: {
 		authority: 1,
+		right: { operation: 'manage', object: 'user' },
 	},
 });
 const { data, error } = await useFetch(
-	'/api/users/' + useSession().data.value?.user?.email,
+	'/api/profile/' + useSession().data.value?.user?.email,
 	{
 		headers: {
 			// @ts-ignore
-			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+			'x-auth-token': useSession().data.value.user.token || '',
 		},
 	}
 );
+let user;
+// @ts-ignore
+if (data.value && data.value.message && data.value.message === 'ok') {
+	// @ts-ignore
+	user = data.value.user;
+}
 const state = reactive<{
 	currentTab: number;
 	oldPassword: string;
@@ -294,13 +308,41 @@ const state = reactive<{
 	error: false,
 	newPasswordCheck: '',
 	// @ts-ignore
-	user: data.value.user,
+	user: user,
 });
 const handleTabs = (i: number) => {
 	state.currentTab = i;
 };
-const handleSubmitUpdate = () => {
-	const { data, error } = useFetch('/api/users/', {
+const handleVerify = async () => {
+	const { data } = await useFetch('/api/verfify', {
+		method: 'post',
+		body: {
+			email: useSession()?.data?.value?.user?.email,
+		},
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+	});
+	if (data.value && data.value.message && data.value.message === 'ok') {
+		$toast.show({
+			title: 'Mail envoyé',
+			type: 'success',
+			timeout: 10,
+			pauseOnHover: true,
+		});
+	} else {
+		$toast.show({
+			title: "Erreur lors de l'envoie du mail",
+			type: 'danger',
+			timeout: 10,
+			pauseOnHover: true,
+		});
+	}
+};
+
+const handleSubmitUpdate = async () => {
+	const { data, error } = await useFetch('/api/users/', {
 		headers: {
 			// @ts-ignore
 			'x-auth-token': useSession()?.data?.value?.user?.token || '',
@@ -369,27 +411,26 @@ const handleSubmitPasswordUpdate = async () => {
 };
 
 const handleDeleteEverything = async () => {
-	const { data } = await useFetch('/api/users/delete', {
-		headers: {
-			// @ts-ignore
-			'x-auth-token': useSession()?.data?.value?.user?.token || '',
-		},
-
-		method: 'delete',
-		body: {
-			email: state.user.email,
-		},
-	});
-	if (data.value && data.value.message && data.value.message === 'ko') {
+	const { data } = await useFetch(
+		'/api/users/' + useSession().data.value?.user.email,
+		{
+			headers: {
+				// @ts-ignore
+				'x-auth-token': useSession()?.data?.value?.user?.token || '',
+			},
+			method: 'delete',
+		}
+	);
+	if (data.value && data.value.message && data.value.message === 'ok') {
+		useSession().signOut();
+		navigateTo('/');
+	} else {
 		$toast.show({
 			title: 'Erreur lors de la suppression du compte',
 			type: 'danger',
 			timeout: 10,
 			pauseOnHover: true,
 		});
-	} else {
-		useSession().signOut();
-		navigateTo('/');
 	}
 };
 </script>

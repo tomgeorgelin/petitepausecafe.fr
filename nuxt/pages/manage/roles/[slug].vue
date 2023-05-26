@@ -78,8 +78,8 @@ const state: {
 	role: role,
 });
 
-const handleSubmitUpdate = () => {
-	const { data, error } = useFetch('/api/roles/', {
+const handleSubmitUpdate = async () => {
+	const { data, error } = await useFetch('/api/roles/', {
 		headers: {
 			// @ts-ignore
 			'x-auth-token': useSession()?.data?.value?.user?.token || '',

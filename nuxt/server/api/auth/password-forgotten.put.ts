@@ -6,24 +6,22 @@ export default defineEventHandler(async (event) => {
 	const body: any = await readBody(event);
 
 	var transporter = nodemailer.createTransport({
-		host: 'node96-eu.n0c.com',
+		// @ts-ignore
+		host: config.MAIL_HOST,
 		port: 587,
 		secure: false,
 		auth: {
-			user: 'motdepasseoublie@petitepausecafe.fr',
-			pass: 'g/nR/.g~~63!.Vn83!',
+			user: config.MAIL_AUTH_USER,
+			pass: config.MAIL_AUTH_PASS,
 		},
 	});
-	const token = jwt.sign({ email: body.email }, config.JWT_KEY ?? '', {
+	const token = jwt.sign({ email: body.email }, config.JWT_KEY, {
 		expiresIn: 180,
 	});
 	const link =
-		'https://petitepausecafe.fr/auth/password-reset?token=' +
-		token +
-		'&email=' +
-		body.email;
+		'https://petitepausecafe.fr/auth/password-reset?token=' + token;
 	let message = {
-		from: 'motdepasseoublie@petitepausecafe.fr',
+		from: config.MAIL_HOST,
 		to: body.email,
 		subject: 'Vous avez perdu votre mot de passe ?',
 		html:
@@ -43,6 +41,6 @@ export default defineEventHandler(async (event) => {
 		}
 	});
 	return {
-		hello: 'you',
+		message: 'ok',
 	};
 });

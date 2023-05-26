@@ -233,7 +233,7 @@ export default {
 					name: this.username,
 					description: this.description,
 				};
-				const { data, error } = useFetch('/api/register', {
+				const { data, error } = await useFetch('/api/register', {
 					method: 'post',
 					body: { user },
 				});
@@ -245,7 +245,7 @@ export default {
 					this.error = true;
 				} else {
 					this.error = false;
-					navigateTo('/auth/login', { external: true });
+					navigateTo('/auth/login');
 				}
 			}
 		},
