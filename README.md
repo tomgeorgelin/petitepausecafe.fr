@@ -17,7 +17,7 @@ Cahier des charges API
 | GET | /dashboard | ✅ |
 | POST | /articles/create | ✅ |
 | PUT | /manage/articles/edit/{id} | ✅ |
-| PUT | /manage/articles/delete/{id} (soft delete) | ❌ | ❌ |
+| PUT | /manage/articles/delete/{id} (soft delete) | ✅ |
 | DELETE | /manage/articles/destroy/{id} | ✅ |
 | POST | /comments/ | ✅ |
 | PUT | /manage/comments/edit/{id} | ❌ |

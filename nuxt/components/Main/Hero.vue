@@ -3,9 +3,9 @@
 		<div class="flex flex-col md:flex-row gap-5 w-[95%] md:w-[70%] mx-auto">
 			<div class="relative rounded-lg overflow-hidden md:w-[70%]">
 				<img
-					src="https://s3.amazonaws.com/designco-web-assets/uploads/2017/06/designbetter_website_book_assets_illustrations_designleadershiphandbook_cover.png"
+					:src="articles[state.currentArticle].image"
 					alt=""
-					class="object-cover md:h-full"
+					class="object-cover md:h-500px h-full w-full aspect-video overflow-hidden object-cover object-bottom"
 				/>
 				<div
 					class="absolute h-full py-8 px-10 top-0 inset-x-0 text-white bg-[#1B0042]/[85%]"
