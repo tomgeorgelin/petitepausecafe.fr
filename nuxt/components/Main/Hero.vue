@@ -76,7 +76,16 @@
 				</div>
 				<hr class="w-full mt-4 mb-5 h-px border-0 bg-gray-200" />
 				<div class="flex flex-col gap-7">
-					<div v-for="(article, index) in articles" :key="index">
+					<div
+						v-for="(article, index) in articles"
+						:key="index"
+						@click="
+							() => {
+								state.currentArticle = index;
+							}
+						"
+						class="hover:cursor-pointer"
+					>
 						<p class="text-xs text-gray-500">
 							{{
 								new Date(article.createdAt)
