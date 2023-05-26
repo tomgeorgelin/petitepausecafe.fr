@@ -412,6 +412,7 @@ const handleSubmitPasswordUpdate = async () => {
 
 const handleDeleteEverything = async () => {
 	const { data } = await useFetch(
+		// @ts-ignore
 		'/api/users/' + useSession().data.value?.user.email,
 		{
 			headers: {
@@ -421,6 +422,7 @@ const handleDeleteEverything = async () => {
 			method: 'delete',
 		}
 	);
+	// @ts-ignore
 	if (data.value && data.value.message && data.value.message === 'ok') {
 		useSession().signOut();
 		navigateTo('/');
