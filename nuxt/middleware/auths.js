@@ -8,6 +8,8 @@ const rolesEquivalent = {
 export default defineNuxtRouteMiddleware(async (to, from) => {
 	const { status, signIn, data } = useSession();
 	if (status.value === 'authenticated') {
+		if (data.value.expires < new Date().toISOString())
+			return signIn(undefined, { callbackUrl: to.path });
 		if (
 			to.meta.meta.authority <=
 			rolesEquivalent[data.value?.user.role.slug]

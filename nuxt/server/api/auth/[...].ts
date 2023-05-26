@@ -8,7 +8,9 @@ const config = useRuntimeConfig();
 
 export default NuxtAuthHandler({
 	secret: config.JWT_KEY,
-
+	session: {
+		maxAge: 2 * 60 * 60, // 2 hours
+	},
 	pages: {
 		// Change the default behavior to use `/login` as the path for the sign-in page
 		signIn: '/auth/login',
@@ -66,7 +68,7 @@ export default NuxtAuthHandler({
 						{ user_id: user._id, email: credentials.email },
 						config.JWT_KEY ?? '',
 						{
-							expiresIn: '2h',
+							expiresIn: '60',
 						}
 					);
 					// save user token
