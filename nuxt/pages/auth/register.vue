@@ -52,8 +52,6 @@
 						"
 						:type="show_passwords ? 'text' : 'password'"
 						id="password"
-						@copy.prevent
-						@paste.prevent
 						placeholder="Mot de passe"
 						class="w-full text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 						v-model="password"
@@ -128,8 +126,6 @@
 					@input="handlePassword()"
 					:type="show_passwords ? 'text' : 'password'"
 					id="confirm_password"
-					@copy.prevent
-					@paste.prevent
 					placeholder="Confirmez votre mot de passe"
 					class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 					v-model="confirm_password"
