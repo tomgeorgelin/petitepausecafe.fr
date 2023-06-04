@@ -1,78 +1,79 @@
 <template>
 	<Header />
-	<section
-		class="flex flex-col md:flex-row gap-5 w-[95%] md:w-[70%] mx-auto px-3 py-5"
-	>
-		<table class="min-w-full">
-			<thead class="bg-white border-b">
-				<tr>
-					<th
-						scope="col"
-						class="text-sm text-center font-medium text-gray-900 px-6 py-4"
-					>
-						Objet
-					</th>
-					<th
-						scope="col"
-						class="text-sm text-center font-medium text-gray-900 px-6 py-4"
-					>
-						Opération
-					</th>
-					<th
-						scope="col"
-						class="text-sm text-center font-medium text-gray-900 px-6 py-4"
-					>
-						Est autorisé
-					</th>
-					<th
-						scope="col"
-						class="text-sm text-center font-medium text-gray-900 px-6 py-4"
-					>
-						Rôle
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<template v-for="permission in permissions">
-					<tr
-						v-for="(operation, index) in permission.operations"
-						:key="index"
-						class="bg-gray-100 border-b"
-					>
-						<td
-							class="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+	<section class="w-[95%] md:w-[70%] mx-auto px-3 py-5">
+		<CommonGoBack class="mb-3" />
+		<div class="flex flex-col md:flex-row gap-5">
+			<table class="min-w-full">
+				<thead class="bg-white border-b">
+					<tr>
+						<th
+							scope="col"
+							class="text-sm text-center font-medium text-gray-900 px-6 py-4"
 						>
-							{{ permission.name }}
-						</td>
-						<td
-							class="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+							Objet
+						</th>
+						<th
+							scope="col"
+							class="text-sm text-center font-medium text-gray-900 px-6 py-4"
 						>
-							{{ operation.name }}
-						</td>
-						<td
-							class="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+							Opération
+						</th>
+						<th
+							scope="col"
+							class="text-sm text-center font-medium text-gray-900 px-6 py-4"
 						>
-							<input
-								type="checkbox"
-								@change="
-									handleChange(
-										operation.name,
-										permission.name,
-										operation.isAuthorized
-									)
-								"
-								v-model="operation.isAuthorized"
-							/>
-						</td>
-						<td
-							class="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+							Est autorisé
+						</th>
+						<th
+							scope="col"
+							class="text-sm text-center font-medium text-gray-900 px-6 py-4"
 						>
-							{{ permission.role }}
-						</td>
+							Rôle
+						</th>
 					</tr>
-				</template>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<template v-for="permission in permissions">
+						<tr
+							v-for="(operation, index) in permission.operations"
+							:key="index"
+							class="bg-gray-100 border-b"
+						>
+							<td
+								class="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+							>
+								{{ permission.name }}
+							</td>
+							<td
+								class="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+							>
+								{{ operation.name }}
+							</td>
+							<td
+								class="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+							>
+								<input
+									type="checkbox"
+									@change="
+										handleChange(
+											operation.name,
+											permission.name,
+											operation.isAuthorized
+										)
+									"
+									v-model="operation.isAuthorized"
+								/>
+							</td>
+							<td
+								class="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+							>
+								{{ permission.role }}
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</div>
 	</section>
 	<Footer />
 </template>

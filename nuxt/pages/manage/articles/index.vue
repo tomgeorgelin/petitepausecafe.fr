@@ -1,6 +1,7 @@
 <template>
 	<Header />
 	<section class="my-10 w-[95%] md:w-[70%] mx-auto">
+		<CommonGoBack />
 		<div class="w-full text-right my-5">
 			<span>Catégorie recherchée : </span>
 			<input

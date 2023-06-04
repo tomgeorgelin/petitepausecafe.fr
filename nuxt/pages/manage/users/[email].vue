@@ -1,6 +1,7 @@
 <template>
 	<Header />
 	<section class="my-10 w-[95%] md:w-[70%] xl:w-[50%] mx-auto">
+		<CommonGoBack />
 		<div id="input" class="flex flex-col w-full my-5">
 			<label for="name" class="text-gray-500 mb-2">Nom</label>
 			<input

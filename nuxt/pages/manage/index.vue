@@ -20,7 +20,6 @@
 						:to="{
 							path: item.link,
 						}"
-						target="_blank"
 						class="hover:underline"
 					>
 						{{ item.title }}

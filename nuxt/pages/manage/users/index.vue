@@ -1,6 +1,7 @@
 <template>
 	<Header />
 	<section class="my-10 w-[95%] md:w-[70%] xl:w-[50%] mx-auto">
+		<CommonGoBack />
 		<div class="w-full text-right my-5">
 			<span>Personne recherchée : </span>
 			<input

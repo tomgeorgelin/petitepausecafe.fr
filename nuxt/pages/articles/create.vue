@@ -3,6 +3,7 @@
 	<section
 		class="container mx-auto w-[95%] md:w-[70%] bg-white p-5 rounded-md shadow-md my-5"
 	>
+		<CommonGoBack />
 		<div class="flex flex-col w-full my-5">
 			<label for="categories" class="text-gray-500 mb-2"
 				>Catégories</label
