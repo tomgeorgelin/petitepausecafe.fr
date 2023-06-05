@@ -60,19 +60,34 @@
 				<CommonArticles :articles="articles" />
 			</div>
 		</section>
+		<section
+			v-if="twitter"
+			class="my-10 w-[95%] md:w-[70%] xl:w-[50%] mx-auto min-h-[400px]"
+		>
+			<div v-html="twitter"></div>
+		</section>
 	</section>
 	<section v-else>Aucun article pour le moment</section>
-
 	<Footer />
-	<div></div>
 </template>
 
 <script setup>
 const route = useRoute();
 const category = route.query.category;
 const author = route.query.author;
+let twitter = null;
 const { data, error } = await useFetch('/api/articles', {
 	query: { category, author },
 });
 const { articles } = data.value;
+if (author && articles[0].user_id.twitter_link) {
+	const { data: twttrData } = await useFetch(
+		'https://publish.twitter.com/oembed?url=' +
+			articles[0].user_id.twitter_link +
+			'&lang=fr&maxheight=400'
+	);
+	if (twttrData && twttrData.value) {
+		twitter = twttrData.value.html;
+	}
+}
 </script>

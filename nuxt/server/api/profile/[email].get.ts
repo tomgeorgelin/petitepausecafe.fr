@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 				{
 					email: event.context.params.email,
 				},
-				'email name description image verified'
+				'email name description image verified twitter_link'
 			).populate({ path: 'role_id', model: Role, select: 'name' });
 			return {
 				user,

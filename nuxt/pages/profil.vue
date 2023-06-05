@@ -102,6 +102,18 @@
 						class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
 					/>
 				</div>
+				<div id="input" class="flex flex-col w-full my-5">
+					<label for="twitter_link" class="text-gray-500 mb-2"
+						>Lien profil twitter
+					</label>
+					<input
+						type="text"
+						id="twitter_link"
+						v-model="state.user.twitter_link"
+						placeholder="https://twitter.com/votre_nom"
+						class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
+					/>
+				</div>
 				<div id="button" class="flex flex-col w-full my-5">
 					<button
 						@click="handleSubmitUpdate()"
@@ -296,6 +308,7 @@ const state = reactive<{
 		verified: string;
 		_id: string;
 		image: string;
+		twitter_link: string;
 		role_id: {
 			_id: string;
 			name: string;
@@ -353,6 +366,7 @@ const handleSubmitUpdate = async () => {
 			email: state.user.email,
 			description: state.user.description,
 			image: state.user.image,
+			twitter_link: state.user.twitter_link,
 		},
 	});
 	if (data.value && data.value.message && data.value.message === 'ko') {

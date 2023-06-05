@@ -34,6 +34,9 @@ export const UserSchema = new Schema(
 		description: {
 			type: String,
 		},
+		twitter_link: {
+			type: String,
+		},
 		role_id: {
 			type: Schema.Types.ObjectId,
 			required: true,

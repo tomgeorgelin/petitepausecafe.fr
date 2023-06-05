@@ -1,14 +1,16 @@
 import { User } from '~~/server/models/User.model';
 export default defineEventHandler(async (event) => {
 	const bodyReq: any = await readBody(event);
-	const { description, email, image, role_id, name } = bodyReq;
+	const { description, email, image, role_id, name, twitter_link } = bodyReq;
 	try {
+		console.log(twitter_link);
 		const user = await User.findOneAndUpdate(
 			{ email },
 			{
 				name,
 				description,
 				image,
+				twitter_link,
 				role_id,
 			},
 			{
