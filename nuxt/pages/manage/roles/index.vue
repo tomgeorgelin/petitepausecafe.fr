@@ -85,6 +85,48 @@
 							</g>
 						</svg>
 					</div>
+					<div @click="handleDelete(item)">
+						<svg
+							v-if="item.deletedAt == null"
+							width="24px"
+							height="24px"
+							viewBox="0 0 24 24"
+							fill="none"
+							class="hover:fill-tint cursor-pointer"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<g id="Interface / Trash_Full">
+								<path
+									id="Vector"
+									d="M14 10V17M10 10V17M6 6V17.8C6 18.9201 6 19.4798 6.21799 19.9076C6.40973 20.2839 6.71547 20.5905 7.0918 20.7822C7.5192 21 8.07899 21 9.19691 21H14.8031C15.921 21 16.48 21 16.9074 20.7822C17.2837 20.5905 17.5905 20.2839 17.7822 19.9076C18 19.4802 18 18.921 18 17.8031V6M6 6H8M6 6H4M8 6H16M8 6C8 5.06812 8 4.60241 8.15224 4.23486C8.35523 3.74481 8.74432 3.35523 9.23438 3.15224C9.60192 3 10.0681 3 11 3H13C13.9319 3 14.3978 3 14.7654 3.15224C15.2554 3.35523 15.6447 3.74481 15.8477 4.23486C15.9999 4.6024 16 5.06812 16 6M16 6H18M18 6H20"
+									stroke="#000000"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</g>
+						</svg>
+						<svg
+							v-else
+							dwidth="24px"
+							height="24px"
+							viewBox="0 0 24 24"
+							class="hover:fill-tint cursor-pointer"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<g id="Edit / Add_Plus_Square">
+								<path
+									id="Vector"
+									d="M8 12H12M12 12H16M12 12V16M12 12V8M4 16.8002V7.2002C4 6.08009 4 5.51962 4.21799 5.0918C4.40973 4.71547 4.71547 4.40973 5.0918 4.21799C5.51962 4 6.08009 4 7.2002 4H16.8002C17.9203 4 18.4801 4 18.9079 4.21799C19.2842 4.40973 19.5905 4.71547 19.7822 5.0918C20.0002 5.51962 20.0002 6.07967 20.0002 7.19978V16.7998C20.0002 17.9199 20.0002 18.48 19.7822 18.9078C19.5905 19.2841 19.2842 19.5905 18.9079 19.7822C18.4805 20 17.9215 20 16.8036 20H7.19691C6.07899 20 5.5192 20 5.0918 19.7822C4.71547 19.5905 4.40973 19.2842 4.21799 18.9079C4 18.4801 4 17.9203 4 16.8002Z"
+									stroke="#000000"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</g>
+						</svg>
+					</div>
 				</div>
 			</template>
 		</e-data-table>
@@ -146,19 +188,71 @@ definePageMeta({
 	},
 });
 import type { Header, Item } from 'vue3-easy-data-table';
+const { $toast } = useNuxtApp();
 let items: any = [];
 const { data } = await useFetch('/api/roles', {
 	headers: {
 		// @ts-ignore
 		'x-auth-token': useSession()?.data?.value?.user?.token || '',
 	},
+	params: {
+		all: true,
+	},
 });
 if (data.value && data.value.roles) {
 	items = data.value.roles;
 }
+const state = reactive({
+	items: items,
+});
 const searchValue = ref('');
 const handleEdit = (item: any) => {
 	navigateTo('/manage/roles/' + item.slug);
+};
+const handleDelete = async (item: any) => {
+	const { data } = await useFetch('/api/roles/' + item._id, {
+		method: 'delete',
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+	});
+	// @ts-ignore
+	if (data.value && data.value.message && data.value.message === 'ok') {
+		if (item.deletedAt === null) {
+			$toast.show({
+				title: 'Rôle archivé',
+				type: 'success',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		} else {
+			$toast.show({
+				title: 'Rôle désarchivé',
+				type: 'success',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		}
+		let index = state.items.findIndex((i: any) => i._id == item._id);
+		state.items[index].deletedAt = data.value.role.deletedAt;
+	} else {
+		if (item.deletedAt === null) {
+			$toast.show({
+				title: "Erreur lors de l'archivage",
+				type: 'danger',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		} else {
+			$toast.show({
+				title: 'Erreur lors du désarchivage',
+				type: 'danger',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		}
+	}
 };
 const headers: Header[] = [
 	{ text: 'Nom', value: 'name', sortable: true },

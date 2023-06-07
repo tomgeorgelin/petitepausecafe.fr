@@ -9,6 +9,10 @@ const RoleSchema = new Schema(
 		slug: {
 			type: String,
 		},
+		deletedAt: {
+			type: Date || null,
+			default: null,
+		},
 	},
 	{ timestamps: true }
 );
