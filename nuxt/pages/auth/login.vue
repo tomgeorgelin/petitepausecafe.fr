@@ -94,6 +94,7 @@ export default {
 	},
 	methods: {
 		async handleClick() {
+			const { $toast } = useNuxtApp();
 			const user = {
 				email: this.email,
 				password: this.password,
@@ -106,6 +107,12 @@ export default {
 					user
 				);
 				if (error) {
+					$toast.show({
+						title: 'Erreur lors de la connexion',
+						type: 'danger',
+						timeout: 10,
+						pauseOnHover: true,
+					});
 					this.error = true;
 				} else {
 					return navigateTo(url, { external: true });
