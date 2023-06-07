@@ -2,7 +2,11 @@
 	<Header />
 	<section class="my-10 w-[95%] md:w-[70%] xl:w-[50%] mx-auto">
 		<CommonGoBack />
-		<div id="input" class="flex flex-col w-full my-5">
+		<div
+			id="input"
+			class="flex flex-col w-full my-5"
+			v-if="slug != 'create'"
+		>
 			<label for="slug" class="text-gray-500 mb-2">Slug</label>
 			<div
 				id="slug"
@@ -60,18 +64,20 @@ definePageMeta({
 const { $toast, $modal } = useNuxtApp();
 
 const route = useRoute();
-const slug = route.params.slug;
 let role = { slug: '', name: '', _id: '' };
-const { data } = await useFetch('/api/roles/' + slug, {
-	headers: {
-		// @ts-ignore
-		'x-auth-token': useSession()?.data?.value?.user?.token || '',
-	},
-});
-// @ts-ignore
-if (data.value && data.value.role) {
+const slug = route.params.slug;
+if (slug != 'create') {
+	const { data } = await useFetch('/api/roles/' + slug, {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+	});
 	// @ts-ignore
-	role = data.value.role;
+	if (data.value && data.value.role) {
+		// @ts-ignore
+		role = data.value.role;
+	}
 }
 const state: {
 	role: { slug: string; name: string; _id: string };
@@ -80,32 +86,61 @@ const state: {
 });
 
 const handleSubmitUpdate = async () => {
-	const { data, error } = await useFetch('/api/roles/', {
-		headers: {
-			// @ts-ignore
-			'x-auth-token': useSession()?.data?.value?.user?.token || '',
-		},
+	if (slug != 'create') {
+		const { data, error } = await useFetch('/api/roles/', {
+			headers: {
+				// @ts-ignore
+				'x-auth-token': useSession()?.data?.value?.user?.token || '',
+			},
 
-		method: 'put',
-		body: {
-			slug: state.role.slug,
-			name: state.role.name,
-		},
-	});
-	if (data.value && data.value.message && data.value.message === 'ko') {
-		$toast.show({
-			title: 'Erreur lors de la mise à jour',
-			type: 'danger',
-			timeout: 10,
-			pauseOnHover: true,
+			method: 'put',
+			body: {
+				slug: state.role.slug,
+				name: state.role.name,
+			},
 		});
+		if (data.value && data.value.message && data.value.message === 'ko') {
+			$toast.show({
+				title: 'Erreur lors de la mise à jour',
+				type: 'danger',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		} else {
+			$toast.show({
+				title: 'Rôle mis à jour',
+				type: 'success',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		}
 	} else {
-		$toast.show({
-			title: 'Rôle mis à jour',
-			type: 'success',
-			timeout: 10,
-			pauseOnHover: true,
+		const { data } = await useFetch('/api/roles/create', {
+			headers: {
+				// @ts-ignore
+				'x-auth-token': useSession()?.data?.value?.user?.token || '',
+			},
+
+			method: 'post',
+			body: {
+				name: state.role.name,
+			},
 		});
+		if (data.value && data.value.message && data.value.message === 'ok') {
+			$toast.show({
+				title: 'Rôle créé',
+				type: 'success',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		} else {
+			$toast.show({
+				title: 'Erreur lors de la création',
+				type: 'danger',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		}
 	}
 };
 

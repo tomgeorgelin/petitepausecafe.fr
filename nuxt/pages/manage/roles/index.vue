@@ -2,19 +2,45 @@
 	<Header />
 	<section class="my-10 w-[95%] md:w-[70%] xl:w-[50%] mx-auto">
 		<CommonGoBack />
-		<div class="w-full text-right my-5">
-			<span>Rôle recherché : </span>
-			<input
-				type="text"
-				placeholder="Nom"
-				class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
-				v-model="searchValue"
-			/>
+		<div class="flex flex-row justify-between">
+			<div id="button" class="flex flex-col w-fit my-5">
+				<button
+					type="submit"
+					class="w-full py-4 px-3 bg-tint rounded-lg text-white"
+					@click="navigateTo('/manage/roles/create')"
+				>
+					<div class="flex flex-row items-center justify-center">
+						<div class="mr-2">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 50 50"
+								width="30px"
+								fill="white"
+								height="30px"
+							>
+								<path
+									d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 24 13 L 24 24 L 13 24 L 13 26 L 24 26 L 24 37 L 26 37 L 26 26 L 37 26 L 37 24 L 26 24 L 26 13 L 24 13 z"
+								/>
+							</svg>
+						</div>
+						<div class="font-bold">Créer</div>
+					</div>
+				</button>
+			</div>
+			<div class="w-full text-right my-5">
+				<span>Rôle recherché : </span>
+				<input
+					type="text"
+					placeholder="Nom"
+					class="text-black bg-white appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-tint focus:shadow-lg"
+					v-model="searchValue"
+				/>
+			</div>
 		</div>
 		<e-data-table
 			class="shadow-md rounded-md"
 			:headers="headers"
-			:items="items"
+			:items="state.items"
 			themeColor="#FF5480"
 			alternating
 			rowsPerPageMessage="Lignes par page"
