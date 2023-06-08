@@ -1,4 +1,5 @@
 import { Article } from '~/server/models/Article.model';
+import { slug as slugFunction } from '../../utils/index';
 
 export default defineEventHandler(async (event) => {
 	// Get data form body
@@ -6,13 +7,16 @@ export default defineEventHandler(async (event) => {
 	//Get id from params
 	if (event.context && event.context.params) {
 		const slug = event.context.params.slug;
-
+		body.slug = slugFunction(body.title);
 		// Update article
 		try {
-			await Article.findOneAndUpdate({ slug: slug }, body);
-			return { message: 'ok' };
+			const article = await Article.findOneAndUpdate(
+				{ slug: slug },
+				body
+			);
+			return { message: 'ok', article };
 		} catch (e: any) {
-			return { message: 'ko' };
+			return { message: 'ko', article: {} };
 		}
 	}
 });
