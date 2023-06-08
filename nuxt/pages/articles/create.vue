@@ -156,6 +156,7 @@ const { data } = await useFetch('/api/categories', {
 let categories: any = [];
 let article: any = {};
 if (data.value && data.value.message && data.value.message === 'ok') {
+	// @ts-ignore
 	categories = data.value.categories;
 }
 if (slug && (await checkAuthorization('articles', 'update'))) {
@@ -198,8 +199,8 @@ const handleSubmitUpdate = async () => {
 		if (state.slug != '') {
 			const { data } = await useFetch('/api/articles/' + state.slug, {
 				headers: {
-					// @ts-ignore
 					'x-auth-token':
+						// @ts-ignore
 						useSession()?.data?.value?.user?.token || '',
 				},
 
@@ -219,7 +220,9 @@ const handleSubmitUpdate = async () => {
 			});
 			if (
 				data.value &&
+				// @ts-ignore
 				data.value.message &&
+				// @ts-ignore
 				data.value.message === 'ok'
 			) {
 				$toast.show({
@@ -239,8 +242,8 @@ const handleSubmitUpdate = async () => {
 		} else {
 			const { data } = await useFetch('/api/articles/create', {
 				headers: {
-					// @ts-ignore
 					'x-auth-token':
+						// @ts-ignore
 						useSession()?.data?.value?.user?.token || '',
 				},
 

@@ -203,7 +203,9 @@ const { data } = await useFetch('/api/categories', {
 		all: true,
 	},
 });
+// @ts-ignore
 if (data.value && data.value.categories) {
+	// @ts-ignore
 	items = data.value.categories;
 }
 const state = reactive({
@@ -240,6 +242,7 @@ const handleDelete = async (item: any) => {
 			});
 		}
 		let index = state.items.findIndex((i: any) => i._id == item._id);
+		// @ts-ignore
 		state.items[index].deletedAt = data.value.category.deletedAt;
 	} else {
 		if (item.deletedAt === null) {

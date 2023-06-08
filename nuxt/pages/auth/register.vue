@@ -231,8 +231,8 @@ export default {
 				};
 				const { data, error } = await useFetch('/api/register', {
 					headers: {
-						// @ts-ignore
 						'x-auth-token':
+							// @ts-ignore
 							useSession()?.data?.value?.user?.token || '',
 					},
 					method: 'post',

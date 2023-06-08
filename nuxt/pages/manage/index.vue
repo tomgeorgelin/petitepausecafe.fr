@@ -176,7 +176,11 @@ const state = reactive({
 			display: await checkAuthorization('comments', 'manage'),
 		},
 	],
-	data: {},
+	data: {
+		nbArticles: 0,
+		nbComments: 0,
+		nbCategories: 0,
+	},
 });
 state.items = state.items.sort((a, b) => {
 	// @ts-ignore
@@ -195,6 +199,7 @@ const { data } = await useFetch('/api/widgets', {
 });
 if (data.value && data.value.message && data.value.message === 'ok') {
 	console.log(data.value.data);
+	// @ts-ignore
 	state.data = data.value.data;
 }
 </script>
