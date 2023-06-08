@@ -45,6 +45,10 @@ const state = reactive({ password: '', password_check: '' });
 
 const handleClick = async () => {
 	const { data } = await useFetch('/api/auth/password-reset', {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
 		method: 'put',
 		body: { password: state.password, token },
 	});

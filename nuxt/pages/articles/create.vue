@@ -147,14 +147,24 @@ definePageMeta({
 const route = useRoute();
 const slug = route.query.slug;
 const { $toast } = useNuxtApp();
-const { data } = await useFetch('/api/categories');
+const { data } = await useFetch('/api/categories', {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
+});
 let categories: any = [];
 let article: any = {};
 if (data.value && data.value.message && data.value.message === 'ok') {
 	categories = data.value.categories;
 }
 if (slug && (await checkAuthorization('articles', 'update'))) {
-	const { data } = await useFetch('/api/articles/' + slug);
+	const { data } = await useFetch('/api/articles/' + slug, {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+	});
 	// @ts-ignore
 	if (data.value && data.value.message && data.value.message === 'ok') {
 		// @ts-ignore

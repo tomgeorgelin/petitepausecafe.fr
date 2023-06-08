@@ -77,6 +77,10 @@ const category = route.query.category;
 const author = route.query.author;
 let twitter = null;
 const { data, error } = await useFetch('/api/articles', {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
 	query: { category, author },
 });
 const { articles } = data.value;

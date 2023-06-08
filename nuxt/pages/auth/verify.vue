@@ -26,6 +26,10 @@ const token = route.query.token;
 
 const handleClick = async () => {
 	const { data } = await useFetch('/api/auth/verify', {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
 		method: 'put',
 		body: { token },
 	});

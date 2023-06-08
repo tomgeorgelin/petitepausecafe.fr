@@ -230,6 +230,11 @@ export default {
 					description: this.description,
 				};
 				const { data, error } = await useFetch('/api/register', {
+					headers: {
+						// @ts-ignore
+						'x-auth-token':
+							useSession()?.data?.value?.user?.token || '',
+					},
 					method: 'post',
 					body: { user },
 				});

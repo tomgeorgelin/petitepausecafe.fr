@@ -85,6 +85,11 @@
 
 <script setup>
 const route = useRoute();
-const { data, error } = await useFetch('/api/articles/' + route.params.slug);
+const { data, error } = await useFetch('/api/articles/' + route.params.slug, {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
+});
 const { article, comments } = data.value;
 </script>

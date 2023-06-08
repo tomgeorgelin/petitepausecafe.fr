@@ -7,6 +7,10 @@ export const checkAuthorization = async (object, operation) => {
 	if (sessionData && sessionData.user) {
 		const userRole = sessionData.user.role._id;
 		const { data, error } = await useFetch('/api/checkAuthorization', {
+			headers: {
+				// @ts-ignore
+				'x-auth-token': useSession()?.data?.value?.user?.token || '',
+			},
 			query: { object, operation, role: userRole },
 		});
 		if (data.value) {

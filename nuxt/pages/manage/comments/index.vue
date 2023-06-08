@@ -136,7 +136,12 @@ definePageMeta({
 });
 import type { Header } from 'vue3-easy-data-table';
 let items: any = [];
-const { data } = await useFetch('/api/comments');
+const { data } = await useFetch('/api/comments', {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
+});
 if (data.value && data.value.comments) {
 	items = data.value.comments;
 }

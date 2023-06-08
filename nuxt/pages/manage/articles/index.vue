@@ -140,6 +140,10 @@ definePageMeta({
 import type { Header } from 'vue3-easy-data-table';
 let items: any = [];
 const { data } = await useFetch('/api/articles', {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
 	query: {
 		admin: true,
 	},

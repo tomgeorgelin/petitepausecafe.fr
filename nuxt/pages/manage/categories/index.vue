@@ -195,6 +195,10 @@ import type { Header, Item } from 'vue3-easy-data-table';
 const { $toast } = useNuxtApp();
 let items: any = [];
 const { data } = await useFetch('/api/categories', {
+	headers: {
+		// @ts-ignore
+		'x-auth-token': useSession()?.data?.value?.user?.token || '',
+	},
 	params: {
 		all: true,
 	},

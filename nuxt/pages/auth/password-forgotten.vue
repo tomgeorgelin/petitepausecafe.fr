@@ -35,6 +35,11 @@ export default {
 	methods: {
 		async handleClick() {
 			const { data } = await useFetch('/api/auth/password-forgotten', {
+				headers: {
+					// @ts-ignore
+					'x-auth-token':
+						useSession()?.data?.value?.user?.token || '',
+				},
 				method: 'put',
 				body: { email: this.email },
 			});
