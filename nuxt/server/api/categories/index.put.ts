@@ -1,4 +1,5 @@
 import { Category } from '~~/server/models/Category.model';
+import { slug as slugFunction } from '../../utils/index';
 export default defineEventHandler(async (event) => {
 	const bodyReq: any = await readBody(event);
 	const { name, slug, image } = bodyReq;
@@ -7,11 +8,13 @@ export default defineEventHandler(async (event) => {
 			{ slug },
 			{
 				name,
+				slug: slugFunction(name),
 				image,
 			}
 		);
 		return { message: 'ok' };
-	} catch {
+	} catch (e: any) {
+		console.log(e);
 		return { message: 'ko' };
 	}
 });

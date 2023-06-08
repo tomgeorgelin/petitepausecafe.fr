@@ -2,7 +2,11 @@
 	<Header />
 	<section class="my-10 w-[95%] md:w-[70%] xl:w-[50%] mx-auto">
 		<CommonGoBack />
-		<div id="input" class="flex flex-col w-full my-5">
+		<div
+			id="input"
+			class="flex flex-col w-full my-5"
+			v-if="slug != 'create'"
+		>
 			<label for="slug" class="text-gray-500 mb-2">Slug</label>
 			<div
 				id="slug"
@@ -70,11 +74,18 @@ const { $toast } = useNuxtApp();
 const route = useRoute();
 const slug = route.params.slug;
 let category = { slug: '', name: '', _id: '', image: '' };
-const { data } = await useFetch('/api/categories/' + slug);
-// @ts-ignore
-if (data.value && data.value.category) {
+if (slug != 'create') {
+	const { data } = await useFetch('/api/categories/' + slug, {
+		headers: {
+			// @ts-ignore
+			'x-auth-token': useSession()?.data?.value?.user?.token || '',
+		},
+	});
 	// @ts-ignore
-	category = data.value.category;
+	if (data.value && data.value.category) {
+		// @ts-ignore
+		category = data.value.category;
+	}
 }
 const state: {
 	category: { slug: string; name: string; _id: string; image: string };
@@ -82,32 +93,62 @@ const state: {
 	category,
 });
 const handleSubmitUpdate = async () => {
-	const { data, error } = await useFetch('/api/categories/', {
-		headers: {
-			// @ts-ignore
-			'x-auth-token': useSession()?.data?.value?.user?.token || '',
-		},
-		method: 'put',
-		body: {
-			slug: state.category.slug,
-			name: state.category.name,
-			image: state.category.image,
-		},
-	});
-	if (data.value && data.value.message && data.value.message === 'ko') {
-		$toast.show({
-			title: 'Erreur lors de la mise à jour',
-			type: 'danger',
-			timeout: 10,
-			pauseOnHover: true,
+	if (slug != 'create') {
+		const { data, error } = await useFetch('/api/categories/', {
+			headers: {
+				// @ts-ignore
+				'x-auth-token': useSession()?.data?.value?.user?.token || '',
+			},
+			method: 'put',
+			body: {
+				slug: state.category.slug,
+				name: state.category.name,
+				image: state.category.image,
+			},
 		});
+		if (data.value && data.value.message && data.value.message === 'ko') {
+			$toast.show({
+				title: 'Erreur lors de la mise à jour',
+				type: 'danger',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		} else {
+			$toast.show({
+				title: 'Catégorie mis à jour',
+				type: 'success',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		}
 	} else {
-		$toast.show({
-			title: 'Rôle mis à jour',
-			type: 'success',
-			timeout: 10,
-			pauseOnHover: true,
+		const { data } = await useFetch('/api/categories/create', {
+			headers: {
+				// @ts-ignore
+				'x-auth-token': useSession()?.data?.value?.user?.token || '',
+			},
+
+			method: 'post',
+			body: {
+				name: state.category.name,
+				image: state.category.image,
+			},
 		});
+		if (data.value && data.value.message && data.value.message === 'ok') {
+			$toast.show({
+				title: 'Catégorie créé',
+				type: 'success',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		} else {
+			$toast.show({
+				title: 'Erreur lors de la création',
+				type: 'danger',
+				timeout: 10,
+				pauseOnHover: true,
+			});
+		}
 	}
 };
 </script>

@@ -17,11 +17,15 @@ const CategorySchema = new Schema(
 			type: String,
 			required: true,
 		},
-		user_id: {
-			type: Schema.Types.ObjectId,
-			required: true,
-			ref: 'Users',
+		deletedAt: {
+			type: Date || null,
+			default: null,
 		},
+		// user_id: {
+		// 	type: Schema.Types.ObjectId,
+		// 	required: true,
+		// 	ref: 'Users',
+		// },
 	},
 	{ timestamps: true }
 );

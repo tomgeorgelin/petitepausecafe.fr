@@ -1,23 +1,19 @@
 import { Category } from '~/server/models/Category.model';
-
-const slug = (text: string) =>
-	text
-		.toLowerCase()
-		.replace(/[^\w ]+/g, '')
-		.replace(/ +/g, '-');
-
+import { slug } from '../../utils/index';
 export default defineEventHandler(async (event) => {
 	// Get data form body
-	const body: any = await readBody(event);
-	body.slug = slug(body.name);
+	const { name, image } = await readBody(event);
 
 	// create category
 	try {
-		await Category.create(body);
-		return { message: 'Category created' };
-	} catch (e: any) {
-		throw createError({
-			message: e.message,
+		const category = await Category.create({
+			name,
+			image,
+			slug: slug(name),
 		});
+		return { message: 'ok', category };
+	} catch (e: any) {
+		console.log(e);
+		return { message: 'ko', category: {} };
 	}
 });
