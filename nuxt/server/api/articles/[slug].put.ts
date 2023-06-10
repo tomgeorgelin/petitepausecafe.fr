@@ -1,15 +1,21 @@
 import { Article } from '~/server/models/Article.model';
 import { slug as slugFunction } from '../../utils/index';
 
+/**
+ * @description Update an article
+ */
 export default defineEventHandler(async (event) => {
-	// Get data form body
+	// get the body
 	const body = await readBody(event);
-	//Get id from params
+	// check if the event has a context and params
 	if (event.context && event.context.params) {
+		// get the slug from the params
 		const slug = event.context.params.slug;
+		// set the slug from the title
 		body.slug = slugFunction(body.title);
-		// Update article
+
 		try {
+			// find the article with the slug and update it
 			const article = await Article.findOneAndUpdate(
 				{ slug: slug },
 				body

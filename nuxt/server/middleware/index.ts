@@ -2,22 +2,31 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/User.model';
 import { Permission } from '../models/Permission.model';
 
+/**
+ * @description Check if the user has the right to access the route
+ */
 export default defineEventHandler(async (event) => {
+	// we get the route if it exists
 	const route = protectedRoutes.find((e) => {
 		return (
 			getRequestURL(event).toString().includes(e.name) &&
 			e.method === getMethod(event)
 		);
 	});
+	// if the route doesn't exist, end of the function because it is not protected
 	if (!route) return;
 
+	// we get the user token
 	const token = getHeader(event, 'x-auth-token');
+	// if the user is not logged in or dont have the token, we throw an error
 	if (!token) {
+		// this error is because the user dont have the right to access the route
 		throw createError({
 			statusCode: 403,
 			statusMessage: "You don't have the right",
 		});
 	}
+	// if the user is logged in and have the token, we check if he has the right to access the route
 	if (route && token) {
 		const decodedToken = jwt.decode(token);
 		if (decodedToken) {
@@ -29,15 +38,18 @@ export default defineEventHandler(async (event) => {
 					operation: route.operation,
 					object: route.object,
 				});
+				// if the user has the right, end of function and he can access the route
 				if (permission) {
 					return;
 				}
 			}
+			// this error is because the user dont have the right to access the route
 			throw createError({
 				statusCode: 403,
 				statusMessage: "You don't have the right",
 			});
 		}
+		// this error is because the user dont have the right to access the route
 		throw createError({
 			statusCode: 403,
 			statusMessage: "You don't have the right",
@@ -45,6 +57,9 @@ export default defineEventHandler(async (event) => {
 	}
 });
 
+/**
+ * @description List of protected routes
+ */
 const protectedRoutes = [
 	{
 		name: '/api/articles',

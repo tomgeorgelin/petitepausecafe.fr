@@ -6,10 +6,15 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { Role } from '~/server/models/Role.model';
 const config = useRuntimeConfig();
 
+/**
+ * @description authtication handler
+ */
 export default NuxtAuthHandler({
+	// set the secret key for the JWT
 	secret: config.JWT_KEY,
+	// set the session max age to 2 hours
 	session: {
-		maxAge: 2 * 60 * 60, // 2 hours
+		maxAge: 2 * 60 * 60,
 	},
 	pages: {
 		// Change the default behavior to use `/login` as the path for the sign-in page
@@ -17,6 +22,7 @@ export default NuxtAuthHandler({
 		signOut: '/auth/login',
 	},
 	callbacks: {
+		// used update the token object
 		jwt: async ({ token, user }) => {
 			if (user) {
 				token.jwt =
@@ -26,6 +32,7 @@ export default NuxtAuthHandler({
 			}
 			return Promise.resolve(token);
 		},
+		// used to add the user id to the session object
 		session: async ({ session, token }) => {
 			(session as any).user.role = token.role;
 			(session as any).user.id = token.id;
@@ -37,20 +44,18 @@ export default NuxtAuthHandler({
 		// @ts-ignore
 		CredentialsProvider.default({
 			async authorize(credentials: { email: string; password: string }) {
-				// You need to provide your own logic here that takes the credentials
-				// submitted and returns either a object representing a user or value
-				// that is false/null if the credentials are invalid.
-				// NOTE: THE BELOW LOGIC IS NOT SAFE OR PROPER FOR AUTHENTICATION!
+				// if the email or password is empty, we return null
 				if (!(credentials?.email && credentials?.password)) {
 					return null;
 				}
+				// trim and lowercase the email
 				credentials.email = credentials.email
 					.trim()
 					.toLocaleLowerCase();
 
-				// Validate if user exist in our database
 				let user;
 				try {
+					// find the user with the email and populate it
 					// @ts-ignore
 					user = await User.findOne({
 						email: credentials.email,
@@ -58,12 +63,12 @@ export default NuxtAuthHandler({
 				} catch (e) {
 					console.log(e);
 				}
-
+				// if the user is found and the password is correct
 				if (
 					user &&
 					(await bcrypt.compare(credentials.password, user.password))
 				) {
-					// Create token
+					// create a token
 					const token = jwt.sign(
 						{ user_id: user._id, email: credentials.email },
 						config.JWT_KEY ?? '',
@@ -74,7 +79,7 @@ export default NuxtAuthHandler({
 					// save user token
 					user.token = token;
 					user.save();
-					// user
+					// return the user
 					return user;
 				}
 				return null;

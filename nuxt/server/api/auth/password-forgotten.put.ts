@@ -1,10 +1,14 @@
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
+// used to get the secrets key
 const config = useRuntimeConfig();
+/**
+ * @description Send an email to the user with a link to reset his password
+ */
 export default defineEventHandler(async (event) => {
 	// Get data form body
 	const body: any = await readBody(event);
-
+	// create the transporter
 	var transporter = nodemailer.createTransport({
 		// @ts-ignore
 		host: config.MAIL_HOST,
@@ -15,11 +19,14 @@ export default defineEventHandler(async (event) => {
 			pass: config.MAIL_AUTH_PASS,
 		},
 	});
+	// create the token
 	const token = jwt.sign({ email: body.email }, config.JWT_KEY, {
 		expiresIn: 180,
 	});
+	// create the link
 	const link =
-		'https://petitepausecafe.fr/auth/password-reset?token=' + token;
+		'https://www.petitepausecafe.fr/auth/password-reset?token=' + token;
+	// create the message
 	let message = {
 		from: config.MAIL_HOST,
 		to: body.email,
@@ -33,6 +40,7 @@ export default defineEventHandler(async (event) => {
 			link +
 			'</a></p><p>Ce lien est valable 3 minutes.</p></div>',
 	};
+	// send the email
 	transporter.sendMail(message, (err: any, info: any) => {
 		if (err) {
 			console.log(err);

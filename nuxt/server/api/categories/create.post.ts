@@ -1,11 +1,15 @@
 import { Category } from '~/server/models/Category.model';
 import { slug } from '../../utils/index';
+
+/**
+ * @description Create a category
+ */
 export default defineEventHandler(async (event) => {
-	// Get data form body
+	// get the name and image from the body
 	const { name, image } = await readBody(event);
 
-	// create category
 	try {
+		// create the category with the name, image and slug
 		const category = await Category.create({
 			name,
 			image,
