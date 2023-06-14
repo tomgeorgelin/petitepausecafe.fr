@@ -92,4 +92,11 @@ const { data, error } = await useFetch('/api/articles/' + route.params.slug, {
 	},
 });
 const { article, comments } = data.value;
+
+useSeoMeta({
+	title: article.seo_title + ' | petitepausecafe.fr',
+	description: article.seo_description,
+	keywords: article.seo_keywords,
+	ogImage: article.image,
+});
 </script>

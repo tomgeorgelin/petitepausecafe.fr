@@ -94,4 +94,10 @@ if (author && articles[0].user_id.twitter_link) {
 		twitter = twttrData.value.html;
 	}
 }
+useSeoMeta({
+	title: 'Les articles | petitepausecafe.fr',
+	description:
+		"Ici vous pouvez retrouvez plein d'articles sur plein de sujets différents !",
+	keywords: "articles, informatique, le temps d'une pause café",
+});
 </script>
