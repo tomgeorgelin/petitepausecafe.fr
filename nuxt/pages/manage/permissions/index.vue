@@ -24,12 +24,6 @@
 						>
 							Est autorisé
 						</th>
-						<th
-							scope="col"
-							class="text-sm text-center font-medium text-gray-900 px-6 py-4"
-						>
-							Rôle
-						</th>
 					</tr>
 				</thead>
 				<tbody>
