@@ -58,11 +58,6 @@
 									v-model="operation.isAuthorized"
 								/>
 							</td>
-							<td
-								class="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap"
-							>
-								{{ permission.role }}
-							</td>
 						</tr>
 					</template>
 				</tbody>
