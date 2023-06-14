@@ -27,7 +27,7 @@
 				>
 					<img
 						class="h-[250px] overflow-hidden object-cover object-center rounded-lg"
-						src="https://cdn.dribbble.com/users/63407/screenshots/5720287/dribbble_balloon_man_4x.png"
+						:src="category.image"
 						alt=""
 					/>
 					<div class="text-center font-semibold">
