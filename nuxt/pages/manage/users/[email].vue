@@ -52,19 +52,25 @@
 </template>
 
 <script lang="ts" setup>
+// define page meta
 definePageMeta({
+	// use auths middleware
 	middleware: 'auths',
 	meta: {
+		// set authority to 3 (admin)
 		authority: 3,
+		// set right to update users
 		right: { object: 'users', operation: 'update' },
 	},
 });
+// use toast
 const { $toast } = useNuxtApp();
-
+// use route to get email
 const route = useRoute();
 const email = route.params.email;
 let roles: any = [];
 let user: any;
+// get user data from email
 const { data: userData } = await useFetch('/api/users/' + email, {
 	headers: {
 		// @ts-ignore
@@ -81,7 +87,7 @@ if (
 	//@ts-ignore
 	user = userData.value.user;
 }
-
+// get roles
 const { data: dataRoles } = await useFetch('/api/roles', {
 	headers: {
 		// @ts-ignore
@@ -93,14 +99,18 @@ if (
 	dataRoles.value.message &&
 	dataRoles.value.message === 'ok'
 ) {
+	// @ts-ignore
 	roles = dataRoles.value.roles;
 }
 
+// define reactive state
 const state = reactive({
 	user,
 	roles,
 });
-
+/**
+ * @description handle submit update user
+ */
 const handleSubmitUpdate = async () => {
 	const { data, error } = await useFetch('/api/users/', {
 		headers: {

@@ -271,18 +271,26 @@
 	<Footer />
 </template>
 <script lang="ts" setup>
+// get toast and modal from nuxt app context
 const { $toast, $modal } = useNuxtApp();
+// import checkPassword and checkPasswords functions from utils
 import { checkPasswords, checkPassword } from '~/utils/index';
+// define page meta
 definePageMeta({
+	// use auth middleware
 	middleware: 'auths',
 	meta: {
+		// set authority to 1 (user)
 		authority: 1,
+		// set right : operation to manage and object to user
 		right: { operation: 'manage', object: 'user' },
 	},
 });
+// get data from api using user's email
 const { data, error } = await useFetch(
 	'/api/profile/' + useSession().data.value?.user?.email,
 	{
+		// set headers with user's token
 		headers: {
 			// @ts-ignore
 			'x-auth-token': useSession().data.value.user.token || '',
@@ -295,6 +303,7 @@ if (data.value && data.value.message && data.value.message === 'ok') {
 	// @ts-ignore
 	user = data.value.user;
 }
+// set reactive state
 const state = reactive<{
 	currentTab: number;
 	oldPassword: string;
@@ -315,17 +324,23 @@ const state = reactive<{
 		};
 	};
 }>({
-	currentTab: 0,
+	currentTab: 0, // 0 = profile, 1 = password, 2 = delete
 	oldPassword: '',
 	newPassword: '',
-	error: false,
+	error: false, // true if there is an error
 	newPasswordCheck: '',
 	// @ts-ignore
-	user: user,
+	user: user, // the user data
 });
+/**
+ * @description update current tab
+ */
 const handleTabs = (i: number) => {
 	state.currentTab = i;
 };
+/**
+ * @description send email to verify user's email
+ */
 const handleVerify = async () => {
 	const { data } = await useFetch('/api/verfify', {
 		method: 'post',
@@ -337,6 +352,7 @@ const handleVerify = async () => {
 			'x-auth-token': useSession()?.data?.value?.user?.token || '',
 		},
 	});
+	// if everything is ok show success toast
 	if (data.value && data.value.message && data.value.message === 'ok') {
 		$toast.show({
 			title: 'Mail envoyé',
@@ -345,6 +361,7 @@ const handleVerify = async () => {
 			pauseOnHover: true,
 		});
 	} else {
+		// in case an error occured show error toast
 		$toast.show({
 			title: "Erreur lors de l'envoie du mail",
 			type: 'danger',
@@ -353,7 +370,9 @@ const handleVerify = async () => {
 		});
 	}
 };
-
+/**
+ * @description function to update user's data
+ */
 const handleSubmitUpdate = async () => {
 	const { data, error } = await useFetch('/api/users/', {
 		headers: {
@@ -385,14 +404,27 @@ const handleSubmitUpdate = async () => {
 		});
 	}
 };
+/**
+ * @description function to check if there is an error in password inputs
+ */
 const handleInputPasswords = () => {
 	if (!checkPasswords(state.newPassword, state.newPasswordCheck)) {
-		console.log('password different');
+		state.error = true;
 	}
 	if (!checkPassword(state.newPassword)) {
-		console.log('password 8 char etc');
+		state.error = true;
+	}
+	if (
+		checkPasswords(state.newPassword, state.newPasswordCheck) &&
+		checkPassword(state.newPassword)
+	) {
+		state.error = false;
 	}
 };
+
+/**
+ * @description function to update user's password
+ */
 const handleSubmitPasswordUpdate = async () => {
 	const { data, error } = await useFetch('/api/users/update-password', {
 		headers: {
@@ -424,6 +456,9 @@ const handleSubmitPasswordUpdate = async () => {
 	}
 };
 
+/**
+ * @description function to delete user's account
+ */
 const handleDeleteEverything = async () => {
 	const { data } = await useFetch(
 		// @ts-ignore

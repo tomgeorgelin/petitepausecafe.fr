@@ -132,24 +132,31 @@
 </template>
 
 <script lang="ts" setup>
+// import checkAuthorization to check if the user has the right to access the page
 import { checkAuthorization } from '~~/utils/index';
+// define page meta
 definePageMeta({
+	// use auth middleware
 	middleware: 'auths',
 	meta: {
+		// set authority to 2
 		authority: 2,
+		// set right : operation to manage and object to dashboard
 		right: {
 			operation: 'manage',
 			object: 'dashboard',
 		},
 	},
 });
+// define reactive state
 const state = reactive({
+	// items to display
 	items: [
 		{
-			category: 'Gestion',
-			title: 'Gestion des rôles',
-			link: '/manage/roles',
-			display: await checkAuthorization('roles', 'manage'),
+			category: 'Gestion', // category to display
+			title: 'Gestion des rôles', // title to display
+			link: '/manage/roles', // link to redirect
+			display: await checkAuthorization('roles', 'manage'), // check if the user has the right to access the page, if not, the item will not be displayed
 		},
 		{
 			category: 'Gestion',
@@ -176,12 +183,14 @@ const state = reactive({
 			display: await checkAuthorization('comments', 'manage'),
 		},
 	],
+	// data for the widgets
 	data: {
 		nbArticles: 0,
 		nbComments: 0,
 		nbCategories: 0,
 	},
 });
+// sort items by title
 state.items = state.items.sort((a, b) => {
 	// @ts-ignore
 	const lastWordA = a.title.split(' ').pop().toLowerCase();
@@ -189,6 +198,7 @@ state.items = state.items.sort((a, b) => {
 	const lastWordB = b.title.split(' ').pop().toLowerCase();
 	return lastWordA.localeCompare(lastWordB);
 });
+// fetch data for the widgets
 const { data } = await useFetch('/api/widgets', {
 	headers: {
 		// @ts-ignore
@@ -198,7 +208,6 @@ const { data } = await useFetch('/api/widgets', {
 	params: { user_id: useSession()?.data?.value?.user?.id || '' },
 });
 if (data.value && data.value.message && data.value.message === 'ok') {
-	console.log(data.value.data);
 	// @ts-ignore
 	state.data = data.value.data;
 }

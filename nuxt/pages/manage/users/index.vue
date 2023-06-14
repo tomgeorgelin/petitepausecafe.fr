@@ -115,18 +115,25 @@
 </style>
 
 <script lang="ts" setup>
+import type { Header } from 'vue3-easy-data-table';
+// import route to get the slug
 const route = useRoute();
 const slug = route.query.slug;
+// define search fields for data table
 const searchFields = ['name', 'slug'];
+let items: any = [];
+// define page meta
 definePageMeta({
+	// use auths middleware
 	middleware: 'auths',
 	meta: {
+		// set authority to 2 (admin)
 		authority: 3,
+		// set right to manage users
 		right: { object: 'users', operation: 'manage' },
 	},
 });
-import type { Header, Item } from 'vue3-easy-data-table';
-let items: any = [];
+// fetch users
 const { data } = await useFetch('/api/users', {
 	headers: {
 		// @ts-ignore
@@ -136,10 +143,16 @@ const { data } = await useFetch('/api/users', {
 if (data.value && data.value.users) {
 	items = data.value.users;
 }
+// define search value, if slug is not null, set it as default search value
 const searchValue = ref(slug ?? '');
+/**
+ * @description handle edit to redirect to edit page of user
+ */
 const handleEdit = (item: any) => {
 	navigateTo('/manage/users/' + item.email);
 };
+
+// define headers for data table
 const headers: Header[] = [
 	{ text: 'Nom', value: 'name', sortable: true },
 	{ text: 'Email', value: 'email', sortable: true },

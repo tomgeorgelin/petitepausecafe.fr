@@ -8,6 +8,7 @@
 </template>
 
 <script setup>
+// get latest articles
 const { data: articlesData, error: articlesError } = await useFetch(
 	'/api/articles',
 	{
@@ -19,6 +20,7 @@ const { data: articlesData, error: articlesError } = await useFetch(
 	}
 );
 let { articles } = articlesData.value;
+// get categories
 const { data: categoriesData, error: categoriesError } = await useFetch(
 	'/api/categories',
 	{
@@ -29,6 +31,7 @@ const { data: categoriesData, error: categoriesError } = await useFetch(
 	}
 );
 const { categories } = categoriesData.value;
+// get a random article
 const { data: articleData, error: articleError } = await useFetch(
 	'/api/articles',
 	{
@@ -40,7 +43,7 @@ const { data: articleData, error: articleError } = await useFetch(
 	}
 );
 const article = articleData.value.articles;
-
+// get popular articles
 const { data: popularArticlesData, error: popularArticlesError } =
 	await useFetch('/api/articles', {
 		headers: {
@@ -50,4 +53,10 @@ const { data: popularArticlesData, error: popularArticlesError } =
 		query: { popular: true },
 	});
 const popularArticles = popularArticlesData.value.articles;
+useSeoMeta({
+	title: 'petitepausecafe.fr',
+	description:
+		"Ici vous pouvez retrouvez plein d'articles sur plein de sujets différents !",
+	keywords: "articles, informatique, le temps d'une pause café",
+});
 </script>

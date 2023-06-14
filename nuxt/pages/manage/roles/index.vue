@@ -206,16 +206,21 @@
 </style>
 
 <script lang="ts" setup>
+// define page meta
 definePageMeta({
+	// use auths middleware
 	middleware: 'auths',
 	meta: {
+		// set authority to 3 (admin)
 		authority: 3,
+		// set right to manage roles
 		right: { object: 'roles', operation: 'manage' },
 	},
 });
-import type { Header, Item } from 'vue3-easy-data-table';
+import type { Header } from 'vue3-easy-data-table';
 const { $toast } = useNuxtApp();
 let items: any = [];
+// get roles with soft deleted roles
 const { data } = await useFetch('/api/roles', {
 	headers: {
 		// @ts-ignore
@@ -225,16 +230,26 @@ const { data } = await useFetch('/api/roles', {
 		all: true,
 	},
 });
+// @ts-ignore
 if (data.value && data.value.roles) {
+	// @ts-ignore
 	items = data.value.roles;
 }
+// set reactive state
 const state = reactive({
 	items: items,
 });
+// set search value
 const searchValue = ref('');
+/**
+ * @description redirect to role edit page
+ */
 const handleEdit = (item: any) => {
 	navigateTo('/manage/roles/' + item.slug);
 };
+/**
+ * @description soft delete or restore role
+ */
 const handleDelete = async (item: any) => {
 	const { data } = await useFetch('/api/roles/' + item._id, {
 		method: 'delete',
@@ -261,6 +276,7 @@ const handleDelete = async (item: any) => {
 			});
 		}
 		let index = state.items.findIndex((i: any) => i._id == item._id);
+		// @ts-ignore
 		state.items[index].deletedAt = data.value.role.deletedAt;
 	} else {
 		if (item.deletedAt === null) {
