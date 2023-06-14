@@ -24,6 +24,12 @@ export default {
 		return {
 			items: [
 				{
+					icon: 'break',
+					title: 'Break',
+					action: () => this.editor.commands.setHardBreak(),
+					isActive: () => this.editor.isActive('break'),
+				},
+				{
 					icon: 'bold',
 					title: 'Bold',
 					action: () =>

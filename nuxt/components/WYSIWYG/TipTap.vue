@@ -9,6 +9,7 @@
 </template>
 <script>
 import Heading from '@tiptap/extension-heading';
+import HardBreak from '@tiptap/extension-hard-break';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import TextStyle from '@tiptap/extension-text-style';
@@ -73,6 +74,7 @@ export default {
 							},
 						},
 					}),
+					HardBreak,
 					TextStyle,
 					Color,
 					TextAlign.configure({
