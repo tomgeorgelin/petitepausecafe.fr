@@ -48,7 +48,7 @@
 		"highlight.js": "^11.7.0",
 		"jsonwebtoken": "^9.0.0",
 		"lowlight": "^2.8.1",
-		"mongoose": "^6.9.0",
+		"mongoose": "^6.11.1",
 		"nodemailer": "^6.9.1",
 		"vue3-easy-data-table": "^1.5.42"
 	}
